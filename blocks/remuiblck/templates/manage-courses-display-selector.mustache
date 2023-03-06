@@ -1,0 +1,92 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_remuiblck/manage-courses-display-selector
+
+    This template renders display dropdown.
+
+    Example context (json):
+    {
+        "cards": true,
+        "list": false,
+        "summary": false
+    }
+}}
+<div>
+    <div class="dropdown per-page-filter m-0 d-inline-block" data-region="per-page-filter">
+        <button id="perpage" type="button" class="btn  dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+            aria-expanded="false">
+            <span class="d-sm-inline-block" data-active-item-text>
+                {{#str}}showentries, block_remuiblck, {"count": {{perpage}}} {{/str}}
+            </span>
+        </button>
+        <ul class="dropdown-menu" data-show-active-item aria-labelledby="manageentriesperpage">
+            <li>
+                <a class="dropdown-item {{#entries5}} active {{/entries5}}" href="javascript:void(0)"
+                    data-display-option="entries" data-value="4" data-pref="entries" aria-label="5"
+                    aria-controls="entries-view-{{uniqid}}">
+                    {{#str}}showentries, block_remuiblck, {"count":4} {{/str}}
+                </a>
+                <a class="dropdown-item {{#entries10}} active {{/entries10}}" href="javascript:void(0)"
+                    data-display-option="entries" data-value="8" data-pref="entries" aria-label="10"
+                    aria-controls="entries-view-{{uniqid}}">
+                    {{#str}}showentries, block_remuiblck, {"count":8} {{/str}}
+                </a>
+                <a class="dropdown-item {{#entries20}} active {{/entries20}}" href="javascript:void(0)"
+                    data-display-option="entries" data-value="16" data-pref="entries" aria-label="20"
+                    aria-controls="entries-view-{{uniqid}}">
+                    {{#str}}showentries, block_remuiblck, {"count":16} {{/str}}
+                </a>
+                <a class="dropdown-item {{#entries25}} active {{/entries25}}" href="javascript:void(0)"
+                    data-display-option="entries" data-value="24" data-pref="entries" aria-label="25"
+                    aria-controls="entries-view-{{uniqid}}">
+                    {{#str}}showentries, block_remuiblck, {"count":24} {{/str}}
+                </a>
+                <a class="dropdown-item {{#entries50}} active {{/entries50}}" href="javascript:void(0)"
+                    data-display-option="entries" data-value="28" data-pref="entries" aria-label="50"
+                    aria-controls="entries-view-{{uniqid}}">
+                    {{#str}}showentries, block_remuiblck, {"count":28} {{/str}}
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="display-filter" data-region="manage-courses-display-filter">
+    <ul class="m-0 p-0 d-flex flex-row flex-gap-1" data-show-active-item aria-labelledby="managecoursesdisplay">
+        <li class="d-flex align-items-center">
+            <a class="{{#card}} active {{/card}} text-decoration-none" href="#" data-display-option="display" data-value="card"
+                data-pref="cards" aria-label="{{#str}} card, block_remuiblck {{/str}}"
+                aria-controls="courses-view-{{uniqid}}">
+                <span class="edw-icon edw-icon-Card-View"></span>
+            </a>
+        </li>
+        <li  class="d-flex align-items-center">
+            <a class="{{#list}} active {{/list}} text-decoration-none" href="#" data-display-option="display" data-value="list"
+                data-pref="list" aria-label="{{#str}} list, block_remuiblck {{/str}}"
+                aria-controls="courses-view-{{uniqid}}">
+                <span class="edw-icon edw-icon-List-View-08"></span>
+            </a>
+        </li>
+        <li  class="d-flex align-items-center">
+            <a class="{{#summary}} active {{/summary}} text-decoration-none" href="#" data-display-option="display"
+                data-value="summary" data-pref="summary" aria-label="{{#str}} summary, block_remuiblck {{/str}}"
+                aria-controls="courses-view-{{uniqid}}">
+                <span class="edw-icon edw-icon-Topic-View"></span>
+            </a>
+        </li>
+    </ul>
+</div>

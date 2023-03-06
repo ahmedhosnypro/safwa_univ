@@ -1,0 +1,155 @@
+@mixin font-styling($font-size, $font-weight, $line-height) {
+    font-size: $font-size;
+    font-weight: $font-weight;
+    line-height: $line-height;
+}
+
+@mixin set-flex-property($flex, $flex-direction, $gap:unset) {
+    display: $flex;
+    flex-direction: $flex-direction;
+    gap: $gap;
+}
+
+@mixin set-panel-body-bg-style() {
+    border-radius: $block-border-radius;
+    filter: $drop-shadow-xs;
+    background: $white;
+}
+
+@mixin remuiblk-card-styling($img-height:unset, $img-width:unset,$cardcontentpadding:unset,$imgborderradius:unset) {
+    background-color: $white;
+    border: 1px solid $light-border-color;
+    border-radius: $common-border-radius;
+    .rmblk-image-wrapper {
+        .dashboard-card-img {
+            height: $img-height;
+            width: $img-width;
+            border-radius: $imgborderradius;
+            background-position: center;
+            background-size: cover;
+        }
+        .menu-picker-select {
+            position: relative;
+
+            .menu-content {
+                display: none;
+                z-index: 2;
+
+                a {
+                    background-color: $white;
+                    color: $edw-icon-ic-default;
+                    border-radius: 4px;
+                    border: unset;
+                    padding: 0px;
+                    // height: 24px;
+                    // width: 24px;
+                    border-radius: 4px;
+
+                    .edw-icon {
+                        color: $edw-icon-ic-default;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size: 16px;
+                        height: 24px;
+                        width: 24px;
+                        padding: 0px;
+
+                        &:hover {
+                            color: $blue;
+                        }
+                    }
+                }
+            }
+
+            &:hover {
+                >.menu-content {
+                    display: flex;
+                    gap: 8px;
+                    flex-direction: column;
+                    position: absolute;
+                    transition: .3s;
+                    top: 0px;
+                    right: 0px;
+                }
+            }
+
+        }
+    }
+
+    .rmblck-card-body {
+        // padding:24px 24px 2 24px;
+        padding: $cardcontentpadding;
+        .remblk-coursename {
+            @include font-styling(20px, 400, 28px);
+            color: $heading-color;
+        }
+
+        .remblk-course-startdate {
+            @include font-styling(12px, 400, 15px);
+            color: $small-text-color;
+        }
+    }
+}
+@mixin select-box-styling(){
+    padding: 9px 16px;
+    max-height: 40px;
+    border-radius: 5px;
+    color: $paragraph-color-default;
+    border: 1px solid $light-border-color-default;
+    @include font-styling(14px, 400, 22px);
+}
+@mixin no-data-wrapper-style(){
+    height: 248px;
+    width: 248px;
+    background: linear-gradient(180deg, #F5F9FD 0%, rgba(255, 255, 255, 0) 100%);
+    border-radius: 109.934px;
+    margin: 70px 0px;
+    .edw-icon{
+        font-size: 60px;
+        padding: 10px;
+        color: $edw-icon-ic-default;
+    }
+    .no-data-msg{
+        color: $paragraph-color;
+        @include font-styling(16px, 400, 24px);
+    }
+}
+
+@mixin table-modifications() {
+
+    .table-responsive,
+    .dataTables_scroll {
+        .table,
+        .dataTable {
+            margin: 0px !important;
+
+            thead {
+                // color: $heading-color;
+                th {
+                    // padding: 24px;
+                    border-bottom: 1px solid $form-control-border;
+                    background-color: $bg-small-ui;
+                    // color: $heading-color;
+                    box-sizing: content-box;
+                    padding: $pad-10 $pad-8;
+                    @include font-styling(14px, 600, 22px);
+                    white-space: nowrap;
+
+                }
+            }
+            tbody {
+                td {
+                    // padding: 16px 24px;
+                    color: $paragraph-color;
+                    box-sizing: content-box;
+                    padding: $pad-10 $pad-8;
+                    @include font-styling(14px, 400, 22px);
+                    a{
+                        color: $paragraph-color;
+                    }
+                }
+            }
+        }
+    }
+}

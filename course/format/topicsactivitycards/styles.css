@@ -1,0 +1,94 @@
+/* Format topics activity cards styles. */
+
+/* Card. */
+.tac-card,
+.tac-container {
+    transition: all .5s;
+}
+
+.tac-card .activityicon {
+    /* Cards have images, so we hide activity icon. */
+    display: none;
+}
+/* Remove default margin from link name & availability. */
+.tac-card .instancename,
+.tac-card .availabilityinfo {
+    margin: 0 !important;
+}
+
+/* Cards that are links. */
+.tac-card-link:hover {
+    /* Grow/scale on hover. */
+    transform: scale(1.03);
+}
+
+/* Card image. */
+.tac-card-img-link:hover,
+.tac-card-img-link:focus {
+    /* Remove link styles for text inside the image. */
+    text-decoration: none !important;
+}
+
+.tac-card-img {
+    height: 150px;
+    background-size: cover;
+    background-position: center;
+}
+
+/* Activity Duration/time. */
+.tac-card-duration-circle {
+    height: 3.5rem;
+    width: 3.5rem;
+    line-height: 1;
+}
+
+/* Card name. */
+.tac-card-name .instancename {
+    font-size: 1rem !important;
+}
+
+/* Card description. */
+.tac-card-text.tac-card-text-truncate {
+    display: block;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Tags & Availability - normalise styles. */
+.tac-card-tags b,
+.tac-card-availability .availabilityinfo  {
+    font-weight: normal;
+    font-size: small;
+}
+.tac-card-availability .availabilityinfo .badge {
+    font-size: 12px;
+}
+.tac-card-tags .badge {
+    background: #d9dde0;
+    color: #212529;
+}
+
+/* Editing. */
+.tac-card-editing .editing_move.moodle-core-dragdrop-draghandle,
+.tac-card-editing .action-menu.moodle-actionmenu.section-cm-edit-actions {
+    /* Make edit links look like buttons. */
+    background: #d9dde0;
+    padding: .5rem .75rem;
+    border-radius: .3rem;
+}
+.tac-card-editing .editing_move.moodle-core-dragdrop-draghandle .icon {
+    margin-right: 0;
+}
+
+/* Moodle core fixes. */
+
+/* SHAME -  Remove empty div. */
+.tac-card-editing .filler {
+    display: none !important;
+}
+/* SHAME - Remove editing hover colour. */
+#page-course-view-topicsactivitycards.editing .section .activity:hover {
+    background-color: transparent;
+}

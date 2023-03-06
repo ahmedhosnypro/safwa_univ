@@ -1,0 +1,236 @@
+.fullwidth-modal .modal-dialog {
+    max-width: 96vw;
+    width: 96vw;
+}
+
+// .moodle-dialogue-base {
+//     .moodle-dialogue-focused {
+//         background: $bg-block-sidebarsection-color;
+//         border: 1px solid $light-border;
+//         filter: drop-shadow(map-get($box-shadows-values, xs));
+//         border-radius: 4px;
+//         @include media-breakpoint-down(sm) {
+//             max-width: $modal-sm;
+//             left: 50% !important;
+//             top: 50% !important;
+//             transform: translate(-50%, -50%);
+//         }
+//         .moodle-dialogue-wrap {
+//             display: flex;
+//             flex-direction: column;
+//             border-radius: inherit;
+//             border: unset;
+
+//             .moodle-dialogue-hd {
+//                 // display: flex;
+//                 // flex-direction: row;
+//                 // justify-content: space-between;
+//                 // align-items: flex-start;
+//                 // padding: 20px 24px 20px 16px;
+//                 // gap: 8px;
+//                 // border-bottom: 1px solid $light-border;
+
+//                 h5 {
+//                     @extend .h-semibold-4;
+//                     color: $heading-color;
+//                 }
+
+//                 .yui3-widget-buttons {
+//                     height: 24px;
+//                     width: 24px;
+
+//                     .closebutton {
+//                         color: $modal-closebutton-color;
+//                         margin: 0px;
+//                         font-size: $block-icon-size;
+//                         height: $block-icon-size;
+//                         width: $block-icon-width;
+//                         display: flex;
+//                         justify-content: center;
+//                         align-items: center;
+//                         line-height: 50%;
+//                     }
+
+//                     button.yui3-button {
+//                         padding: 0px;
+//                     }
+//                 }
+//             }
+
+//             .moodle-dialogue-bd {
+//                 padding-left: 0px;
+
+//                 .dragdrop-keyboard-drag {
+//                     padding: 0;
+//                     margin: 0;
+
+//                     li {
+//                         display: flex;
+//                         flex-direction: row;
+//                         align-items: center;
+//                         padding: 16px 14px;
+//                         gap: 90px;
+//                         height: 48px;
+//                         @extend.text-link-regular;
+//                         color: $paragraph-color;
+//                         a:focus{
+//                             outline: none;
+//                             color: inherit;
+//                             background-color:transparent;
+//                             box-shadow: none;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+//
+.moodle-dialogue-bd{
+    ul.dragdrop-keyboard-drag {
+        padding: 0;
+        margin: 0;
+        & li {
+            padding: 16px 0px;
+            // height: 48px;
+            @extend.text-link-regular;
+            color: $paragraph-color;
+            &:first-child{
+                padding-top: 0px;
+            }
+            &:last-child{
+                padding-bottom: 0px;
+            }
+            a:focus {
+                outline: none;
+                color: inherit;
+                background-color: transparent;
+                box-shadow: none;
+            }
+        }
+    }
+}
+
+.modal {
+    .modal-header {
+        align-items: center;
+        .modal-title {
+            @include get-typography(4, semibold, desktop);
+            color: $modal-header-text-color;
+
+            @include media-breakpoint-down(sm) {
+                @include get-typography(4, semibold, mobile);
+            }
+        }
+    }
+    .mform fieldset:last-of-type {
+        border: 0;
+    }
+}
+.moodle-dialogue {
+    @include media-breakpoint-down(md) {
+        width: 97% !important;
+    }
+    .moodle-dialogue-content {
+        &.moodle-dialogue-wrap {
+            background-color: $modal-content-bg;
+            border: $modal-content-border-width solid $modal-content-border-color;
+            @include border-radius($modal-content-border-radius);
+            outline: 0;
+
+            .moodle-dialogue-hd.yui3-widget-hd {
+                display: flex;
+                background: $modal-content-bg;
+                padding: $modal-header-padding;
+                color: $modal-header-text-color;
+                border-bottom: $modal-header-border-width solid $modal-header-border-color;
+                max-height: add($edw-icon-size-large, $modal-header-padding-y * 2);
+                @include border-top-radius($modal-content-inner-border-radius);
+                @include get-typography(4, semibold, desktop);
+                margin: 0;
+
+                h5,
+                h3 {
+                    @include get-typography(4, semibold, desktop);
+                    margin: 0;
+
+                    @include media-breakpoint-down(sm) {
+                        @include get-typography(4, semibold, mobile);
+                    }
+                }
+
+                @include media-breakpoint-down(sm) {
+                    @include get-typography(4, semibold, mobile);
+                }
+
+                .closebutton {
+                    padding: 0;
+                    &::after {
+                        content: "\47";
+                        font-family: $remui-icon-font-family;
+                        font-size: $edw-icon-size-large;
+                    }
+                }
+            }
+            .yui3-widget-bd {
+                color: $paragraph-color;
+                padding: $modal-inner-padding;
+            }
+        }
+    }
+}
+.moodle-dialogue-lightbox,
+.yui3-skin-sam .yui3-widget-mask {
+    background: $modal-backdrop-bg
+}
+
+.modal,
+.moodle-dialogue {
+    .filemanager {
+        .form-group {
+            padding: 0;
+        }
+    }
+}
+.modal-sidebar {
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    height: 100%;
+    margin: 0;
+    background-color: $white;
+    align-content: center;
+
+    .modal-content {
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: transparent;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+    .modal-header {
+        border-bottom: none;
+    }
+
+    .modal-footer {
+        flex-wrap: wrap;
+        border-top: none;
+    }
+}
+.modal.modal-in-page {
+    height: auto;
+}
+.modal {
+    .modal-dialog {
+        .modal-content {
+            .modal-footer {
+                .btn {
+                    margin-left: 8px;
+                }
+            }
+        }
+    }
+}

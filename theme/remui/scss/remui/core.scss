@@ -1,0 +1,214 @@
+* {
+   @include thin-scrolls($gray-100);
+}
+body {
+   text-transform: $body-text-transform;
+}
+@if $font-size-tablet-base != null {
+   @include media-breakpoint-down(md) {
+      body {
+         font-size: $font-size-tablet-base;
+      }
+   }
+}
+@if $font-size-mobile-base != null {
+   @include media-breakpoint-down(sm) {
+      body {
+         font-size: $font-size-mobile-base;
+      }
+   }
+}
+
+#page {
+   background: $body-background;
+   @if $body-bg-attachment != null {
+      background-attachment: $body-bg-attachment;
+      @if $body-bg-attachment == fixed {
+         background-size: cover;
+      }
+      @if $body-bg-attachment != fixed {
+         background-size: auto;
+      }
+   }
+}
+.userpicture {
+   border-radius: 50%;
+   border: $navbar-avatar-bordersize solid $navbar-avatar-bordercolor;
+   margin-right: 0.25rem;
+}
+.userinitials {
+   border: $navbar-userinitials-bordersize solid $navbar-avatar-bordercolor;
+}
+
+.path-grade-report-grader {
+   .gradeparent {
+      overflow: auto;
+      max-height: 500px;
+      th.header {
+         position: sticky;
+         left: 0;
+      }
+   }
+}
+
+// form#adminsettings .settingsform h2 {
+// @extend .h-semibold-3;
+// margin-bottom: 2.5rem;
+// }
+.edw-icon-container {
+   width: 24px;
+   height: 24px;
+}
+
+.edw-icon {
+   &.large {
+      font-size: $edw-icon-size-large;
+   }
+   &.small {
+      font-size: $edw-icon-size-small;
+   }
+}
+.form-label-color {
+   color: $paragraph-color;
+}
+
+body:not(.pagelayout-frontpage) {
+   .site-announcement.alert {
+      position: absolute;
+   }
+   .license-notice{
+      position: fixed !important;
+      top: $navbar-height;
+   }
+}
+.site-announcement.alert{
+   // position: fixed ;
+   // top: $navbar-height;
+   width: 100%;
+   top: 0px;
+   left: 0;
+   right: 0;
+   z-index: $zindex-sticky;
+   transition: all 1s ease-in-out;
+   &.show-more {
+      &:hover > .ellipsis {
+         transition: all 0.5s ease-in-out;
+         display: block;
+      }
+      // &.fixedtop-0 {
+      //    transition: all 0.5s ease-in-out;
+      //    top: 0;
+      // }
+   }
+}
+
+#dictionarypopup .popover {
+   width: 400px;
+}
+
+
+// code to handle color of the quiz timer
+.pagelayout-incourse {
+   .time_circles>div>h4 {
+      color: $paragraph-color;
+   }
+
+   .time_circles>div>span {
+      color: $paragraph-color;
+   }
+}
+
+// license-notice z-index value
+.license-notice {
+   z-index: 1700 !important;
+}
+// Color for primary and light badge
+.badge-primary {
+   background-color: $ascent-bg-color;
+}
+
+// Small ui element badge.
+.badge-light {
+   background-color: $bg-small-ui;
+}
+//settings page  admin settings nav bar and page improvement  in mobile view.
+#adminsettings {
+   .settingsform {
+      ::-webkit-scrollbar {
+         display: none;
+      }
+
+      .form-setting {
+         .form-control[size] {
+            width: 100%;
+         }
+
+         // .colourdialogue {
+         //    width: 100%;
+         // }
+      }
+   }
+
+   .edw-tabs-navigation {
+      @include media-breakpoint-down(sm) {
+         overflow-x: auto;
+         height: $secondary-navmenu-height+5;
+      }
+
+      .nav-tabs {
+         @include media-breakpoint-down(sm) {
+            white-space: nowrap;
+            flex-wrap: nowrap;
+         }
+
+         .nav-link {
+            // color: $heading-color;
+            background-color: transparent;
+
+            &.active,
+            &.focus,
+            &:focus {
+               box-shadow: unset;
+            }
+         }
+      }
+   }
+}
+
+hr {
+   border-top: $hr-border-width solid $medium-border;
+}
+
+.dropdown-item {
+   &[aria-current="true"] {
+      background-color: $bg-small-ui;
+   }
+}
+// static code for badges
+.badge,.current-badge{
+   border-radius: 50px;
+   padding: 4px 8px;
+   font-size: 12px !important;;
+   line-height: 14px !important;
+   font-weight: 400!important;
+   height: fit-content;
+}
+/*ER-407 Fix*/
+#page-mod-glossary-view .container-fluid.tertiary-navigation .navitem:last-child .dropdown-menu{
+   left: -245% !important;
+}
+#region-top-blocks.has-blocks{
+   margin-bottom: $blocks-gap-lg;
+}
+.course-info-container{
+   .rating-short-design{
+      div{
+         span{
+            order: 2;
+            text-align: right;
+            margin-left: 0.25rem;
+         }
+      }
+   }
+
+}

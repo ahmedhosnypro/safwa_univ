@@ -1,0 +1,163 @@
+// $datatables_pad_y:16px;
+// $datatables_pad_x:24px;
+
+$table_head_bg_color: $bg-small-ui;
+$table-border-rad:8px;
+$table-th-height:50px;
+$table-bd-hd-height:60px; // height of table body th
+
+
+table {
+
+    &.dataTable,
+    &.generaltable {
+        font-size: 14px;
+        border-radius: $table-border-rad;
+        color: $heading-color;
+        filter: drop-shadow(map-get($box-shadows-values, xs));
+
+        thead {
+            background-color: $table_head_bg_color;
+
+            tr {
+                th {
+                    // padding:$pad-y  $pad-x;
+                    height: $table-th-height;
+                    vertical-align: middle;
+                    border-right: 1px solid $medium-border;
+                    // @extend .h-semibold-6;
+                    @include get_typography(6, semibold, all);
+
+                    &:last-child {
+                        border-right: unset;
+                    }
+
+                }
+            }
+        }
+
+        tbody {
+
+            td,
+            th {
+                // padding: $pad-y $pad-x;
+                height: $table-bd-hd-height;
+                background-color: $white;
+                color: $paragraph-color;
+                vertical-align: middle;
+                border-top: 1px solid $light-border;
+                border-right: 1px solid $light-border;
+
+                &:last-child {
+                    border-right: unset;
+                }
+
+                // @extend .h-regular-6;
+                @include get_typography(6, regular, all);
+            }
+        }
+    }
+}
+
+.gradereport-grader-table {
+    .heading {
+        background-color: $table_head_bg_color;
+    }
+}
+
+.show-drawer-right,
+.show-drawer-left {
+    table {
+        font-size: 12px;
+    }
+}
+
+
+#page-report-outline-index {
+    .table-responsive {
+        filter: drop-shadow(map-get($box-shadows-values, xs));
+        border-radius: $table-border-rad;
+
+        .generaltable {
+            filter: unset;
+            overflow: hidden;
+
+            tbody {
+                td.numviews {
+                    text-align: left;
+                }
+
+                tr.section {
+                    color: $heading-color;
+                }
+            }
+        }
+    }
+}
+
+#page-course-view-participants {
+    .userlist {
+        #participantsform {
+            .buttons {
+                .form-inline {
+                    .btn-group + div {
+                        display: grid;
+                        text-align: start;
+                        gap: 8px;
+                        label[for="formactionid"] {
+                            padding: 0 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .table-dynamic {
+        overflow: visible;
+        // filter: drop-shadow(map-get($box-shadows-values, xs));
+        // .no-overflow {
+            // overflow-x: auto;
+            // table.generaltable {
+                // overflow: hidden;
+            // }
+        // }
+    }
+}
+
+#page-admin-plugins {
+    .table-responsive {
+        filter: drop-shadow(map-get($box-shadows-values, xs));
+        border-radius: $table-border-rad;
+
+        .generaltable {
+            filter: unset;
+
+            tbody {
+                tr.plugintypeheader {
+                    th {
+                        // @extend .h-semibold-6;
+                        @include get_typography(6, semibold, all);
+                        color: $heading-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#page-admin-user {
+    .table-responsive {
+        .generaltable {
+            overflow: hidden;
+        }
+    }
+}
+#page-admin-theme-index{
+    .table-responsive{
+        filter: drop-shadow(map-get($box-shadows-values, xs));
+        .generaltable{
+            filter: unset;
+            overflow: hidden;
+        }
+    }
+}

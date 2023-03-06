@@ -1,0 +1,59 @@
+Release
+=======
+
+Version 4.1.0
+=============
+
+Feature - Edwiser RemUI Customizer and its features.
+    - UI / Ux Improvements
+    - A New Quick setup panel is added in the customizer to quickly choose among the colour schemes and font family.
+    - Global-level typography settings improved
+    - Buttons customizer settings improved
+    - Apply smart color feature introduced in customizer.
+Feature - Quick menu links added for quick navigation.
+Feature - UI Improvement for Site-wide Announcement.
+Feature - A new setting is added for the site name or icon color.
+Feature - A new setting is added to handle page width.
+Feature - New course stats added on dashboard.
+Feature - HomePage Builder section UI Improvement.
+Feature - New settings added for the login page header logo.
+Feature - Messaging panel UI/Ux improvement.
+Feature - Sidebar UI improvements.
+Feature - Pages UI/UX improvements
+    - Enrollment page
+    - Course page
+    - Course Archive page
+    - Login page
+    - Calendar page
+    - Messaging page
+Tweak - Activity navigation on course page, functionality improvements.
+Tweak - Enable recent courses setting is moved to the customizer.
+Tweak - Show categories dropdown settings are moved to the customizer.
+Tweak - Send feedback to the Edwiser menu now available in the floating button area.
+Tweak - Customizer optimization
+Fix - Minor bug fixes and improvements
+Deprecated - Menu orientation setting from footer deprecated.
+Deprecated - Deprecated default button settings.
+Deprecated - Icons settings deprecated from RemUI settings.
+Deprecated - Forms settings deprecated from RemUI settings.
+Deprecated - Social share icons are removed from the login page.
+Deprecated - The existing course card designs are deprecated and a new design is added for course cards.
+
+Version 4.0.4-Beta
+==================
+
+Feature - Header design improvements.
+Feature - Added a new option to choose a colour for the header logo.
+Feature - Footer design improvements.
+Feature - Messaging drawer improvements.
+Feature - New Designs for diffrent blocks of core moodle.
+    * Course Overview
+    * Recently Accessed courses
+    * Calendar Block
+Feature - Left Sidebar Elements design improved.
+Feature - My courses page design improved.
+Feature - New icons and fonts family added..
+Feature - Course page Left sidebar Improvements
+Feature - Course page Topics/ weekly format design improvements.
+Feature - Course page has a new option for the header, and its design improvements.
+Feature - Page layout width improvements.
