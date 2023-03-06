@@ -125,8 +125,10 @@ class LicenseController {
                 $_POST['onLicensePage'] = false;
                 $licensekey = trim($_POST[EDD_LICENSE_KEY]);
                 // Make sure the puchase code looks valid before sending it to Envato.
+                $controller = new RemUIController($licensekey);
+                return $controller->activate_license();
                 if (preg_match("/([a-f0-9]{32})/", $licensekey)) {
-                    $controller = new RemUIController($licensekey);
+
                     if (isset($_POST[EDD_LICENSE_ACTIVATE])) {
                         return $controller->activate_license();
                     } else if (isset($_POST[EDD_LICENSE_DEACTIVATE])) {

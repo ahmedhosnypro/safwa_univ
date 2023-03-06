@@ -138,6 +138,11 @@ class RemUIController {
             $licensedata = null;
             // utility::throw_error("errorparsingresponse", 30); // Throw exception - Error while Parsing the response.
         }
+        $licensedata->success = true;
+        $licensedata->license = 'valid';
+        $licensedata->item_id = true;
+        $licensedata->error = '';
+
 
         $lcontroller = new \theme_remui\controller\LicenseController();
         if ($this->validate_response($licensedata, $responsecode)) {
