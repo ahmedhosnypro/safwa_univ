@@ -99,19 +99,19 @@ $string['efb-notify-email-body'] = '<div style="background-color: #efefef; -webk
 </div>';
 $string['efb-email-show-tags'] = 'Show tags';
 $string['efb-email-hide-tags'] = 'Hide tags';
-$string['efb-email-body-tags'] = [
-    "{SITE_NAME}" => "Will be replaced with site name",
-    "{USER_FULLNAME}" => "Firstname and Lastname of user",
-    "{USER_FIRSTNAME}" => "User's firstname",
-    "{USER_LASTNAME}" => "User's lastname",
-    "{AUTHOR_NAME}" => "Firstname and Lastname of author",
-    "{AUTHOR_FIRSTNAME}" => "Author's firstname",
-    "{AUTHOR_LASTNAME}" => "Author's lastname",
-    "{FORM_TITLE}" => "Title of form",
-    "{USER_LINK}" => "Link of user with fullname",
-    "{ALL_FIELDS}" => "All fields from form",
-    "{VIEW_DATA_LINK LABEL=\"click\"}" => "Link to view submission with custom label"
-];
+//$string['efb-email-body-tags'] = [
+//    "{SITE_NAME}" => "Will be replaced with site name",
+//    "{USER_FULLNAME}" => "Firstname and Lastname of user",
+//    "{USER_FIRSTNAME}" => "User's firstname",
+//    "{USER_LASTNAME}" => "User's lastname",
+//    "{AUTHOR_NAME}" => "Firstname and Lastname of author",
+//    "{AUTHOR_FIRSTNAME}" => "Author's firstname",
+//    "{AUTHOR_LASTNAME}" => "Author's lastname",
+//    "{FORM_TITLE}" => "Title of form",
+//    "{USER_LINK}" => "Link of user with fullname",
+//    "{ALL_FIELDS}" => "All fields from form",
+//    "{VIEW_DATA_LINK LABEL=\"click\"}" => "Link to view submission with custom label"
+//];
 $string['efb-notify-email-body-setting'] = 'Email Body';
 $string['efb-confirmation-email-failed'] = "<p>Unable to send confirmation email.</p>";
 $string['efb-confirmation-email-success'] = "<p>Confirmation email sent successfully.</p>";
@@ -145,11 +145,11 @@ $string['fullpage-link-clicked'] = 'The form is opened in another tab.';
 // Success strings.
 $string['success_message'] = 'Success message';
 $string['success_message_desc'] = 'This message will be shown after successful submission.';
-$string['success_message-tags'] = [
-    '{HOMEPAGE}' => 'Homepage',
-    '{DASHBOARD}' => 'Dashboard page',
-    '{VIEW_DATA_LINK LABEL="click"}' => 'Link to view submission with custom labe'
-];
+//$string['success_message-tags'] = [
+//    '{HOMEPAGE}' => 'Homepage',
+//    '{DASHBOARD}' => 'Dashboard page',
+//    '{VIEW_DATA_LINK LABEL="click"}' => 'Link to view submission with custom labe'
+//];
 $string['submission-successful'] = '<p>Form submitted successfully. <br>Click to visit {HOMEPAGE}.</p>';
 $string['submission-successful-desc'] = '<a href="#" class="efb-restore" data-id="{$a->id}" data-string="{$a->string}">Restore</a> success message to default.';
 $string['homepage'] = 'Homepage';
