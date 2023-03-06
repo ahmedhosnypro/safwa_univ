@@ -1,0 +1,93 @@
+<li id="module-{{mod.id}}"
+    data-region="module"
+    data-module="{{mod.id}}"
+    class="tac-container col-12 {{widthclass}} m-0 mb-4 activity {{mod.modname}} modtype_{{mod.modname}} {{mod.extraclasses}} {{^mod.uservisible}} notavailable {{/mod.uservisible}}">
+
+    {{! Card. }}
+    <div class="tac-card m-2 p-0 rounded shadow h-100 d-flex flex-column bg-white
+            {{! Add class if card is a link, and we are not editing. }}
+            {{#cmlink}} {{^editing}} tac-card-link {{/editing}} {{/cmlink}} {{{additionalcssclasses}}}">
+        {{! Used by moodle js. }}
+        <span class="sr-only">{{mod.modname}} {{name}}</span>
+        {{! Card header. }}
+        {{#showheader}}
+            {{#cmlink}}
+            <a class="tac-card-img-link b-block" href="{{cmlink}}" {{#onclick}} onclick="{{{onclick}}}" {{/onclick}} title="{{name}}">
+            {{/cmlink}}
+            {{#cardimage}}
+                <div class="tac-card-img rounded-top {{^cardimage}} bg-light {{/cardimage}}" style="background-image: url('{{{cardimage}}}');">
+            {{/cardimage}}
+            {{^cardimage}}
+                <div>
+            {{/cardimage}}
+                    {{#duration}}
+                        <div class="tac-card-duration text-right p-2">
+                            <div class="tac-card-duration-circle bg-primary text-white border shadow rounded-circle p-3 d-inline-flex justify-content-center align-items-center flex-column">
+                                {{{duration}}}
+                            </div>
+                        </div>
+                    {{/duration}}
+                </div>
+
+            {{#cmlink}}
+            </a>
+            {{/cmlink}}
+        {{/showheader}}
+
+        {{! Card content. }}
+        <div class="tac-card-content px-3 pt-3">
+            {{#cmname}}
+                {{#editing}}<div class="tac-card-modname small text-uppercase"> {{mod.modname}} </div>{{/editing}}
+                <div class="tac-card-name cmname pt-3">
+                    {{{cmname}}}
+                </div>
+            {{/cmname}}
+
+            {{#text}}
+                <div class="tac-card-text pt-3 {{#cmname}} small tac-card-text-truncate {{/cmname}}">
+                    {{{text}}}
+                </div>
+            {{/text}}
+
+            {{#mod.afterlink}}
+                <div class="tac-card-afterlink">
+                    {{{mod.afterlink}}}
+                </div>
+            {{/mod.afterlink}}
+        </div>
+
+        {{! Card metadata. }}
+        <div class="tac-card-metadata px-3 mt-auto mb-3">
+            <div class="tac-card-text pt-3 tac-card-footer ">{{{cardfooter}}}</div>
+            {{#availability}}
+                <div class="tac-card-availability mb-1">
+                    {{{availability}}}
+                </div>
+            {{/availability}}
+            {{#taglist}}
+                <div class="tac-card-tags mb-1">
+                    {{{taglist}}}
+                </div>
+            {{/taglist}}
+
+            {{#completion}}
+                <div class="tac-card-completion text-right">
+                    {{{completion}}}
+                </div>
+            {{/completion}}
+
+            {{! Editing. }}
+            {{#editing}}
+                <hr>
+                <div class="tac-card-editing p-3 mb-2 position-relative">
+                    {{{moveicons}}}
+                    <div class="editoptions actions">
+                        {{{editoptions}}}
+                    </div>
+                </div>
+            {{/editing}}
+        </div>
+        {{! End card metadata. }}
+    </div>
+    {{! End card. }}
+</li>

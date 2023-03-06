@@ -1,0 +1,81 @@
+
+$header-icon-size:$navbar-icon-size;
+$input-field-padding-y :12px;
+$input-field-padding-x :16px;
+#page-header {
+    margin-bottom: $page-header-margin-bottom;
+
+    .header-wrapper {
+        .header-actions-container {
+            .header-action {
+                .simplesearchform {
+                    // max-width: $searchfield-width;
+                    form {
+                        height: 100%;
+                        @include media-breakpoint-down(sm) {
+                            padding: 0px;
+                        }
+                    }
+                    .input-group {
+                        padding: $input-field-padding-y $input-field-padding-x;
+                        input{
+                            color: $header-text-default;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .dashboard-bar-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 24px;
+
+        @include media-breakpoint-down(sm) {
+            gap: 8px;
+        }
+
+        h3.welcome-note {
+            // @extend .h-semibold-3;
+            @include get_typography(3, semibold, all);
+            color: $heading-color;
+            margin: 0;
+
+            @include media-breakpoint-down(sm) {
+                @include get_typography(3, bold, mobile);
+
+            }
+        }
+
+        .page-context-header {
+            padding: 0;
+        }
+
+        .page-header-headings {
+            padding: 0;
+
+            .header-heading {
+                // @extend .h-semibold-3;
+                @include get_typography(3, semibold, all);
+                // color: $heading-color;
+                margin: 0;
+
+                @include media-breakpoint-down(sm) {
+                    @include get_typography(3, bold, mobile);
+                }
+            }
+        }
+    }
+}
+div.reset-pagebutton-wrapper {
+    justify-content: flex-end;
+    .singlebutton form {
+        margin: 0;
+    }
+    @include media-breakpoint-down(sm) {
+        margin-top: $page-header-margin-bottom;
+        justify-content: flex-start;
+    }
+}

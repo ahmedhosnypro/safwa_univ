@@ -1,0 +1,479 @@
+$block-margin:3px;
+$filter-items-max-height:40px;
+$filter-items-padding-x:10px;
+$filter-items-padding-y:9px;
+$flex-gap-8:8px;
+$flex-gap-16:16px;
+$flex-gap-24:24px;
+$filter-icon-size:$edw-icon-size-large;
+$default-medium-border:#D5DDEA;
+.default-blocks-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-gap: 25px;
+
+    .card-wrapper {
+        transition: .15s ease all;
+
+        .card-body {
+            background-image: url([[pix:theme_remui|default]]);
+            height: 150px;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
+        &:hover {
+            transform: scale(1.07);
+            box-shadow: 0 9px 10px #0000000f, 0 1px 0 #0000000f;
+
+            .ribbon {
+                left: 0;
+            }
+        }
+    }
+}
+
+.block-region:not([data-blockregion="side-pre"]) {
+    .block {
+        &:not(:last-of-type) {
+           margin-bottom: $blocks-gap-lg;
+           @include media-breakpoint-down(md) {
+                margin-bottom: $blocks-gap-md;
+           }
+           @include media-breakpoint-down(sm) {
+                margin-bottom: $blocks-gap-sm;
+           }
+        }
+        .edw-block-body {
+            background-color: $block-body-color;
+            padding: 24px;
+            @include get_box_shadow(xs);
+        }
+        .block-content-area:not(.edw-block-body) {
+            filter: drop-shadow(map-get($box-shadows-values, xs));
+        }
+    }
+}
+
+@mixin block-overview-filter-responsiveness {
+    .nav-grouping-selector {
+        overflow-x: auto;
+        .nav {
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            background-color: transparent;
+        }
+
+    }
+
+    ::-webkit-scrollbar {
+        width: 12px;
+        display: none;
+    }
+
+    .all-filter-wrapper {
+        flex-direction: column;
+        gap: $flex-gap-16;
+        .edw-search-form-wrapper {
+            .input-group-prepend {
+                .form-control{
+                    width: 100%;
+                }
+            }
+        }
+        .nav-display-selector {
+            .nav {
+                gap: $flex-gap-8;
+            }
+        }
+    }
+}
+
+.block {
+    border: none;
+    background-color: $block-main-bg;
+    .block-body-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: $flex-gap-16;
+    }
+
+    .block-header-wrapper {
+        .block-header {
+            // @extend .h-bold-4;
+            @include get_typography(4, bold, all);
+            // color: $heading-color;
+            margin-bottom: 0px;
+
+            @include media-breakpoint-down(sm) {
+                @include get_typography(4, semibold, desktop);
+            }
+        }
+
+        .block-controls {
+            i,
+            a {
+                color: $ic-default;
+            }
+
+            .menubar {
+                gap: $flex-gap-16;
+
+                .action-menu-item,
+                .action-menu-trigger {
+                    height: 24px;
+                    width: 24px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+
+                    .dropdown-toggle::after {
+                        content: none;
+                    }
+
+                    i {
+                        font-size: $block-icon-size;
+                        height: $block-icon-size;
+                        width: $block-icon-size;
+                        color: $block-icon-color;
+                        font-weight: 400;
+                    }
+                }
+
+                .action-menu-item {
+                    .moodle-core-dragdrop-draghandle {
+                        display: flex;
+
+                        .icon,
+                        .fa {
+                            margin: 0;
+                        }
+
+                        &:focus,&:hover {
+                            i {
+                                color: $brand-primary;
+                            }
+
+                        }
+                    }
+                }
+
+                .action-menu-trigger {
+                    .dropdown {
+                        .dropdown-toggle{
+                            display:flex;
+                        }
+
+                        &.show,&:hover  {
+                            .dropdown-toggle {
+                                i {
+                                    color: $brand-primary;
+                                }
+                            }
+                        }
+                    }
+
+                    .dropdown-menu {
+                        a {
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .block-secton-divider {
+        display: none
+    }
+}
+// It will hadle the display of radio  on feedback form in Ernr block.
+.block_edwiserratingreview{
+    .feedbackform-container{
+        .rating-stars-input{
+            input[type=radio] {
+                display: none !important;
+            }
+        }
+    }
+}
+
+.block-myoverview {
+    [data-region="filter"] {
+        gap: $flex-gap-16;
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            display: none;
+        }
+
+        .nav-grouping-selector {
+            border-bottom: 1px solid $medium-border;
+
+            @include media-breakpoint-down(sm) {
+                overflow-x: auto;
+            }
+
+            .nav {
+                margin: 0px 0px 16px 0px;
+                gap: $flex-gap-24;
+                border-bottom: unset;
+
+                @include media-breakpoint-down(sm) {
+                    flex-wrap: nowrap;
+                    white-space: nowrap;
+                    background-color: transparent;
+                }
+
+                li.nav-item {
+                    .nav-link {
+                        padding: 0px;
+                        margin: 0px;
+                        border: unset;
+                        border-radius: unset;
+                        // @extend .h-regular-6;
+                        @include get_typography(6, regular, all);
+                        color: $paragraph-color;
+
+                        &:focus {
+                            box-shadow: none;
+                        }
+
+                        @include media-breakpoint-down(sm) {
+                            background-color: transparent;
+
+                        }
+                    }
+
+                    [aria-current="true"] {
+                        // @extend .h-semibold-6;
+                        @include get_typography(6, semibold, all);
+
+                        &::after {
+                            content: "  ";
+                            display: flex;
+                            position: relative;
+                            top: 16px;
+                            visibility: visible;
+                            width: 100%;
+                            border-bottom: 3px solid $brand-primary;
+                        }
+                    }
+                }
+            }
+        }
+
+        .all-filter-wrapper {
+            gap: $flex-gap-24;
+            @include media-breakpoint-down(sm) {
+                flex-direction: column;
+                gap: $flex-gap-16;
+            }
+            .nav-search-sort-selector {
+                gap: $flex-gap-16;
+                color: $paragraph-color;
+
+                .dropdown {
+                    .dropdown-toggle {
+                        // @extend .h-semibold-6;
+                        @include get_typography(6, semibold, all);
+                        color: $form-paragraph-color-default;
+                        border: 1px solid $form-medium-color-default;
+                        padding: $filter-items-padding-y $filter-items-padding-x;
+                        // max-height: $filter-items-max-height;
+                    }
+                }
+
+                .edw-search-form-wrapper {
+                    .input-group-prepend {
+                        border: 1px solid $form-medium-color-default;
+                        border-radius: 5px;
+                        max-width: 190px;
+                        //     max-height: $filter-items-max-height;
+                        //     border-radius: 5px;
+                        //     // @include media-breakpoint-down(sm) {
+                        //     //     max-width: unset;
+                        //     // }
+                        button.btn {
+                            background-color: transparent;
+                            border: unset;
+                            height: fit-content;
+                            width: fit-content;
+                            padding: 8px;
+                            .edw-icon {
+                                font-size: $filter-icon-size;
+                                height: $filter-icon-size;
+                                width: $filter-icon-size;
+                            }
+                        }
+
+                        .form-control {
+                            // @extend .h-semibold-6;
+                            @include get_typography(6, semibold, all);
+                            color: $form-paragraph-color-default;
+                            background-color: transparent;
+                            border: unset;
+                            padding: unset;
+                            overflow: hidden;
+                            max-height: 22px;
+                            &:focus {
+                                box-shadow: none;
+                            }
+
+                            // padding: $filter-items-padding-y $filter-items-padding-x;
+                        }
+                    }
+                }
+            }
+
+            .nav-display-selector-wrapper {
+                .seeallmycourses {
+                    white-space: nowrap;
+                    line-height: 24px;
+
+                    .edw-icon.edw-icon-Right-Arrow {
+                        font-size: $filter-icon-size;
+                        height: $filter-icon-size;
+                        width: $filter-icon-size;
+                    }
+                }
+
+                .nav-display-selector {
+                    .nav {
+                        margin: 0px;
+                        gap: $flex-gap-16;
+                        border-bottom: unset;
+                        background-color: unset;
+
+                        @include media-breakpoint-down(sm) {
+                            gap: $flex-gap-8;
+                        }
+
+                        .nav-item {
+                            .nav-link {
+                                padding: 0px;
+                                border-radius: unset;
+                                color: $ic-default;
+                                background-color: unset;
+                                border: unset;
+
+                                &:focus {
+                                    box-shadow: none;
+                                }
+
+                                .edw-icon {
+                                    font-size: 24px;
+                                    height: 32px;
+                                    width: 32px;
+                                }
+
+                                [aria-current="true"] {
+                                    color: $brand-primary;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .edw-course-summary-container .edw-course-list .edw-list-body .edw-card-design-ft{
+        @include media-breakpoint-down(sm){
+            flex-direction: column;
+        }
+        .progress-data-wrapper{
+            width: 50%;
+            @include media-breakpoint-down(sm){
+                width: 100%;
+            }
+        }
+        .view-course-btn{
+            width: 50%;
+            height: fit-content;
+            @include media-breakpoint-down(sm){
+                width: 100%;
+            }
+        }
+    }
+}
+.dashboard-card-footer.menu {
+    opacity: unset !important;
+
+}
+.dashboard-card {
+    @include hover-focus {
+        .dashboard-card-footer.menu {
+            opacity: unset !important;
+        }
+    }
+}
+#block-region-side-pre {
+    .block {
+        margin: unset;
+        background-color: transparent;
+        border-bottom: 1px solid $light-border;
+        border-radius: 0px;
+
+        &.block_myoverview {
+            @include block-overview-filter-responsiveness();
+        }
+    }
+
+    .block-body-wrapper {
+        @extend .p-mx-6;
+        @extend .p-my-8;
+        gap: $flex-gap-16;
+
+        .block-content-area {
+            background-color: unset;
+        }
+    }
+
+    .block-header-wrapper {
+        height: unset;
+
+        .block-header {
+            // @extend .h-semibold-4;
+            @include get_typography(4, semibold, all);
+            background-color: unset;
+        }
+
+    }
+
+    .block-myoverview {
+        .edw-course-summary-container .edw-course-list .edw-list-body .edw-card-design-ft {
+            flex-direction: column;
+            .progress-data-wrapper {
+                width: 100%;
+            }
+            .view-course-btn {
+                width: 100%;
+                height: fit-content;
+            }
+        }
+    }
+}
+
+.add_block_button {
+    margin-bottom: $page-header-margin-bottom;
+}
+
+.page-mycourses {
+    .block_myoverview {
+        .seeallmycourses {
+            display: none !important;
+        }
+    }
+}
+.block-timeline{
+    [data-region="day-filter"],[data-region="view-selector"]{
+            .dropdown-toggle{
+                border: 1px solid $default-medium-border;
+                color: $form-paragraph-color-default ;
+                &:active,&:focus{
+                    color: $form-paragraph-color-default ;
+                }
+            }
+    }
+}

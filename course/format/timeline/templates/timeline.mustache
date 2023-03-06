@@ -1,0 +1,107 @@
+{{!
+    This file is part of Timeline course format for moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_timeline/timeline
+
+    Course timeline template
+
+    Example context (json): {
+        "hasactions": true,
+        "canaddpost": true,
+        "courseid": 2,
+        "openactivitychoooser": "<a>...</a>",
+        "userinfo": {
+            "img": "https://url.com",
+            "fullname": "John Doe"
+        },
+        "filterlinks": [{
+            "orderlink": "https://url.com",
+            "showall": "https://url.com",
+            "onlyactivities": "https://url.com",
+            "onlyposts": "https://url.com"
+        }],
+        "timelineitems": "<div>...</div>"
+    }
+}}
+<div id="editingonalert" class="alert alert-danger mb-2" role="alert">
+    <h4 class="alert-heading"><i class="fa fa-exclamation-circle"></i> {{#str}}courseeditingison, format_timeline{{/str}}</h4>
+    <p class="m-0">{{#str}}courseeditingisonalert, format_timeline{{/str}}</p>
+</div>
+
+{{#hasactions}}
+    <div class="header-section card shadow-sm">
+        <div class="card-body">
+            {{#userinfo}}
+                <div class="userwelcome">
+                    <img src="{{{img}}}" alt="{{fullname}}" class="userpicture">
+                    <p>{{#str}}wanttodo, format_timeline{{/str}}</p>
+                </div>
+            {{/userinfo}}
+            <div class="buttons">
+                {{{openactivitychoooser}}}
+
+                {{#canaddpost}}
+                    <a href="#" id="create-post-btn" data-action="createpostmodal" data-courseid="{{courseid}}" class="btn btn-primary"><i class="fa fa-pencil"></i> {{#str}}createpost, format_timeline{{/str}}</a>
+                {{/canaddpost}}
+            </div>
+        </div>
+    </div>
+{{/hasactions}}
+
+<div class="card filters-section shadow-sm">
+    <div class="card-body">
+
+        {{#filterlinks}}
+            {{{orderlink}}}
+
+            <div class="dropdown">
+                <a href="#" class="dropdown-toggle btn btn-outline-primary" id="filter-activities" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{#pix}}i/filter{{/pix}} {{#str}}filter{{/str}}</a>
+                <div class="dropdown-menu" aria-labelledby="filter-activities">
+                    <a class="dropdown-item" href="{{{showall}}}"><i class="fa fa-list"></i> {{#str}}showall, format_timeline{{/str}}</a>
+                    <a class="dropdown-item" href="{{{onlyactivities}}}"><i class="fa fa-check-square-o"></i> {{#str}}onlyactivities, format_timeline{{/str}}</a>
+                    <a class="dropdown-item" href="{{{onlyposts}}}"><i class="fa fa-comments-o"></i> {{#str}}onlyposts, format_timeline{{/str}}</a>
+                </div>
+            </div>
+        {{/filterlinks}}
+    </div>
+</div>
+
+<div class="timeline" id="timeline-main" data-courseid="{{courseid}}">
+    <ul class="section img-text">
+        {{{timelineitems}}}
+    </ul>
+</div>
+
+{{#js}}
+    require([
+        'format_timeline/createpost',
+        'format_timeline/deletepost',
+        'format_timeline/createcomment',
+        'format_timeline/loadcomments',
+        'format_timeline/tribute_init'],
+    function(CreatePost, DeletePost, CreateComment, LoadComments, TributeInit) {
+        CreatePost.init('[data-action=createpostmodal]', {{contextid}});
+
+        DeletePost.init();
+
+        CreateComment.init();
+
+        LoadComments.init();
+
+        TributeInit.init();
+    });
+{{/js}}

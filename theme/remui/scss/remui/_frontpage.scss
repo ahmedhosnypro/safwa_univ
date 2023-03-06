@@ -1,0 +1,130 @@
+$aboutus-card-height : 200px !default;
+$aboutus-card-border-radius: 20px !default;
+
+body.pagelayout-frontpage {
+    &.old-frontpage {
+        .cover.rem-staticimage{
+            .cover-background {
+                padding:20% 0;
+            }
+        }
+    }
+
+    #page.drawers {
+        .main-inner {
+            margin-top: 0;
+            // margin-left: 0;
+            // margin-right: 0;
+            .frontpage-sections {
+                max-width: map-get($grid-breakpoints, xxl);
+                margin-bottom: 3.5rem;
+                #edwiser-slider {
+                    .wdm-home-video iframe {
+                        min-height: 500px;
+                    }
+                }
+                #edwiser-aboutus {
+                    .heading {
+                        .title {
+                            color: $heading-color;
+                        }
+                        .desc {
+                            color: $paragraph-color;
+                        }
+                    }
+                    .cards-deck {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                        gap: 24px;
+                        .card {
+                            border: 0;
+                            display: flex;
+                            flex-direction: column;
+                            align-items: center;
+                            text-align: center;
+                        }
+                    }
+                    @include media-breakpoint-up(lg){
+                        .container.incol {
+                            display: flex;
+                            width: 100%;
+                            .heading {
+                                flex: 1 0 40%;
+                            }
+                            .cards-deck {
+                                flex: 1 0 60%;
+                            }
+                        }
+                    }
+                }
+                #edwiser-testimonials {
+                    .heading {
+                        .title {
+                            color: $heading-color;
+                        }
+                        .desc {
+                            color: $paragraph-color;
+                        }
+                    }
+                    .avatar {
+                        display: block;
+                        width: 100px;
+                        height: 100px;
+                        margin: auto;
+                        background-size: cover;
+                        background-position: center;
+                        border-radius: 50%;
+                        @include get-box-shadow(sm);
+                        border: $navbar-avatar-bordersize solid $navbar-avatar-bordercolor;
+                    }
+                    .carousel-inner {
+                        width: 70%;
+                        margin: auto;
+                        text-align: center;
+                    }
+                }
+                #edwiser-blogs {
+                    .blogs {
+                        display: grid;
+                        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                        gap: 24px;
+                        grid-auto-rows: 1fr;
+                    }
+                }
+            }
+        }
+    }
+
+    &.latest-frontpage {
+        .btn-floating {
+            color: white;
+        }
+    }
+
+    #frontpage-available-course-list {
+        @include date-styling();
+        & h2{
+            // @extend .h-semibold-3;
+            @include get_typography(3, semibold, all);
+            color:$heading-color;
+            margin-bottom: 24px;
+        }
+        .dashboard-card {
+            filter: unset;
+        }
+        .available-courses.button-container {
+            .btn {
+                border-radius: 50%;
+                // padding: 0px;
+                width: 50px;
+                height: 50px;
+
+                .edw-icon {
+                    font-size: $edw-icon-size-large;
+                    height: $edw-icon-size-large;
+                    width: $edw-icon-size-large;
+                }
+            }
+        }
+    }
+}

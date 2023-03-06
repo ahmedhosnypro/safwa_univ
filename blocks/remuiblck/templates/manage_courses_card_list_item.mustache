@@ -1,0 +1,40 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+<div class="rmblk-card d-flex dashboard-card" role="listitem" data-region="course-content" data-course-id="4">
+    <div class="rmblk-image-wrapper">
+        <div class="card-img dashboard-card-img  p-p-3 d-flex justify-content-end"
+            style='background-image: url("{{{courseimage}}}");'>
+            <div class="wdm-course-card-actions">
+                {{> block_remuiblck/manage_courses_list_actions }}
+            </div>
+        </div>
+    </div>
+    <div class="rmblck-card-body d-flex flex-column h-100 justify-content-between flex-gap-5">
+        <div class="remblk-body-hd d-flex flex-column flex-gap-d5">
+            <a href="{{courseviewlink}}{{id}}" class="text-truncate text-wrap ellipsis ellipsis-3 remblk-coursename text-decoration-none h-semibold-6" tabindex="0">
+                {{fullname}}
+            </a>
+            <small class="remblk-course-startdate">{{#str}} startdate, block_remuiblck {{/str}} {{#userdate}} {{startdate}}, %A, %d %B %Y
+                {{/userdate}}</small>
+        </div>
+        <div class="remblk-body-ft">
+            <a href="{{courseviewlink}}{{id}}" class="btn btn-primary w-100" tabindex="0">{{#str}} viewcourse, block_remuiblck
+                {{/str}}</a>
+        </div>
+
+    </div>
+</div>

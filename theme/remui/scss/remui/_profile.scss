@@ -1,0 +1,166 @@
+#page-user-profile {
+    #page-header {
+        .page-context-header {
+            display: none;
+        }
+    }
+
+    #aboutme {
+        > section {
+            .row {
+                .col-lg-4 {
+                    padding-left: 0;
+                }
+                .col-lg-8 {
+                    padding-right: 0;
+                }
+            }
+        }
+    }
+    .userprofile {
+        .description {
+            display: none;
+        }
+    }
+    .nav-tabs .nav-link{
+        padding-right: 0;
+        padding-left: 0;
+        margin-left: 24px;
+        color: $paragraph-color;
+        border-radius: 0;
+        &[href="#userprefs"] {
+            padding-left: 10px;
+            margin-left: 15px;
+        }
+        &.active{
+            color: $link-color;
+            border-color: transparent;
+        }
+    }
+    .profile-tabs {
+        padding: 15px 15px;
+    }
+    .header-button-group a {
+        margin-bottom: 0.175rem;
+        .icon {
+            margin-right: 5px;
+        }
+    }
+    .badge-grid {
+        list-style: none;
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
+        @include media-breakpoint-down(sm) {
+            grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+        }
+    }
+    .extra-buttons-container {
+        .header-button-group {
+            gap: 8px;
+            display: flex;
+            align-items: center;
+            @include media-breakpoint-down(md) {
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+        #message-user-button {
+            > span {
+                display: flex;
+                > i {
+                    font-size: 18px;
+                    color: $white;
+                }
+            }
+        }
+    }
+    #userprefs {
+        .userprofile {
+            .tag_list {
+                .inline-list {
+                    .badge {
+                        margin-bottom: 5px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/*Profile Card Design*/
+.profile-cards-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 30px;
+    .course-card {
+        @include get-box-shadow(sm);
+        border-radius: 1rem;
+        font-family: Inter, sans-serif;
+        max-width: 860px;
+        width: 100%;
+        margin: auto;
+        .first-half {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            border-top-left-radius: 1rem;
+            border-bottom-left-radius: 1rem;
+            @include media-breakpoint-down(sm) {
+                height: 100px;
+                min-width: 100%;
+                border-bottom-right-radius: 1rem;
+                border-top-right-radius: 1rem;
+            }
+        }
+        .course-info {
+            @include media-breakpoint-down(sm) {
+                min-width: 100%;
+            }
+            .cat-name {
+                margin-bottom: 5px;
+                font-size: 12px;
+                font-family: sans-serif;
+                color: #ccc;
+                letter-spacing: 1px;
+            }
+            .course-title {
+                color: #626060;
+                letter-spacing: 1px;
+                font-weight: 700;
+            }
+            .course-desc {
+                font-size: 14px;
+                font-family: sans-serif;
+                letter-spacing: 0.5px;
+                // color: #817c7c;
+            }
+            .btn {
+                // background: #2B275F;
+                color: white;
+                text-transform: capitalize;
+            }
+            .course-footer {
+                display: flex;
+                justify-content: space-between;
+                align-items: end;
+                .progress {
+                    height: 0.3rem;
+                }
+                .progress-wrapper {
+                    min-width: 50%;
+                }
+            }
+        }
+    }
+}
+
+#page-user-editadvanced {
+    .page-context-header {
+        align-items: center;
+        #message-user-button {
+            margin: 5px;
+        }
+    }
+}

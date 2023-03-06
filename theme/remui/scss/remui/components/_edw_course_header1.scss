@@ -1,0 +1,84 @@
+$page-header-design1-mh: 336px;
+$page-header-design1-pad: 24px;
+$page-header-design1-rad: 8px;
+#page-header.hasbackground.design-1 {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: $page-header-design1-mh;
+    padding: $page-header-design1-pad;
+    border-radius: $page-header-design1-rad;
+    .header-main-section {
+        .category {
+            margin-bottom: 8px;
+            .badge {
+                color: $brand-secondary;
+                background-color: $white;
+            }
+        }
+        .page-context-header {
+            @include media-breakpoint-down(sm) {
+                margin-bottom: 8px;
+            }
+            .page-header-headings {
+                .header-heading {
+                    &.design-1 {
+                        color: white;
+                        // @extend .h-exbold-3;
+                        @include get_typography(3, exbold, all);
+                    }
+                }
+            }
+        }
+    }
+    .header-sub-section {
+        display: flex;
+        gap: 24px;
+        @include media-breakpoint-down(md) {
+            flex-direction: column;
+            gap:16px;
+        }
+        .instructor-info {
+            .titles {
+                color: $white;
+            }
+        }
+    }
+    .rating-short-design {
+        @include media-breakpoint-down(md) {
+            &.justify-content-around {
+                justify-content: flex-start !important;
+            }
+        }
+        .inner {
+            flex-direction: row-reverse;
+            gap: 8px;
+        }
+        .stars {
+            color: $ic-default;
+            font-size: 20px;
+            @include media-breakpoint-down(sm) {
+                font-size: 14px;
+            }
+        }
+        .avgratingstat {
+            color: $white;
+            font-size: 16px;
+            @include media-breakpoint-down(sm) {
+                font-size: 12px;
+            }
+        }
+    }
+    #page-navbar {
+        display: none;
+    }
+}
+.stat-container {
+    .stat {
+        // width: 24px;
+        // height: 24px;
+        padding: 4px;
+        border-radius: 4px;
+        background-color: $white;
+    }
+}
