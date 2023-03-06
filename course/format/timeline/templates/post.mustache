@@ -1,0 +1,99 @@
+{{!
+    This file is part of Timeline course format for moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template format_timeline/timeline_post_item
+
+    Create post modal template
+
+    Example context (json): {
+        "id": 2,
+        "courseid": 7,
+        "userpic": "https://url.com",
+        "fullname": "User fullname",
+        "humantimecreated": "Monday, 8 June 2020, 3:50 pm",
+        "message": "The post message",
+        "children": [{
+            "userpic": "https://url.com",
+            "fullname": "User fullname",
+            "message": "The post message"
+        }],
+        "loggedinuserinfo": {
+            "img": "https://url.com",
+            "fullname": "User fullname"
+        }
+    }
+}}
+<div id="timeline-main" data-courseid="{{courseid}}">
+    <div id="discuss-{{id}}" class="card discuss shadow-sm" data-id="{{id}}" data-courseid="{{courseid}}" {{#groupid}}data-groupid="{{{.}}}"{{/groupid}}>
+        <div class="card-body">
+            <div class="post mainpost">
+                <div class="userimg">
+                    <img src="{{{userpic}}}" alt="{{fullname}}">
+                </div>
+                <div class="entry">
+                    <div class="entry-content">
+                        <p class="name">{{fullname}} <span class="small">{{humantimecreated}}</span></p>
+                        <p class="text">{{{message}}}</p>
+                    </div>
+                </div>
+
+                {{#groupname}}<p class="groupinfo"><span class="badge badge-info">{{{.}}}</span></p>{{/groupname}}
+            </div>
+            {{#children}}
+                <div class="post">
+                    <div class="userimg">
+                        <img src="{{{userpic}}}" alt="{{fullname}}">
+                    </div>
+                    <div class="entry">
+                        <div class="entry-content">
+                            <p class="name">{{fullname}}</p>
+                            <p class="text">{{{message}}}</p>
+                        </div>
+                    </div>
+                </div>
+            {{/children}}
+            <div class="add-comment">
+                {{#loggedinuserinfo}}
+                    <img src="{{{img}}}" class="userimg" alt="{{fullname}}">
+                {{/loggedinuserinfo}}
+
+                <div class="input-group">
+                    <p class="post-comment-input" placeholder="{{#str}}writeacomment, format_timeline{{/str}}" contenteditable="true" data-tribute="true"></p>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-primary post-comment-btn" type="button">
+                            <i class="fa fa-commenting-o"></i> {{#str}}comment, format_timeline{{/str}}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#js}}
+    require([
+    'format_timeline/deletepost',
+    'format_timeline/createcomment',
+    'format_timeline/tribute_init'],
+    function(DeletePost, CreateComment, TributeInit) {
+        DeletePost.init();
+
+        CreateComment.init();
+
+        TributeInit.init();
+    });
+{{/js}}

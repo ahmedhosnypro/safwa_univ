@@ -1,0 +1,481 @@
+$pagination-item-border-color:$modal-closebutton-color;
+$edw-small-icon-size:16px;
+$edw-common-icon-size:24px;
+$edw-big-size-icon:24px;
+$flex-gap-8:8px;
+$flex-gap-16:16px;
+$flex-gap-24:24px;
+$filter-max-height:40px;
+.placeholder-color{
+    ::placeholder{
+        color: $paragraph-color;
+    }
+}
+@mixin menupicker_archive_page() {
+    .menu-picker-select {
+        position: relative;
+        cursor: pointer;
+
+        .menu-content {
+            display: none;
+            z-index: 2;
+
+            a {
+                background-color: $white;
+                color: $ic-default;
+                border-radius: 4px;
+                border: unset;
+                padding: 0px;
+                // height: 24px;
+                // width: 24px;
+                border-radius: 4px;
+                .edw-icon {
+                    color: $ic-default;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: $edw-small-icon-size;
+                    height: $edw-common-icon-size;
+                    width: $edw-common-icon-size;
+                    padding: 0px;
+
+                    &:hover {
+                        color: $blue;
+                    }
+                }
+            }
+        }
+
+        &:hover {
+            >.menu-content {
+                display: flex;
+                gap: $flex-gap-8;
+                flex-direction: column;
+                position: absolute;
+                transition: .3s;
+                top: 0px;
+                right: 0px;
+            }
+        }
+
+    }
+}
+
+@mixin date-styling {
+    .date {
+        background-color: $course-archive-date-bg;
+        border-radius: 2px;
+        padding: 4px;
+        color: $white;
+    }
+}
+
+@mixin all-view-common-properties {
+    @include date-styling();
+
+    .edw-course-img-wrapper {
+        @include menupicker_archive_page();
+    }
+
+    .coursesummary {
+        color: $paragraph-color;
+    }
+
+    .edw-card-design-ft {
+        .lesson-count {
+            color: $paragraph-color;
+
+        }
+
+        .ft-lock-icon {
+            border: 1px solid $light-border;
+            border-radius: 4px;
+        }
+
+        .edw-icon {
+            font-size: $edw-icon-size-small;
+            color: $ic-default;
+        }
+
+        .enrollmenticons-wrapper {
+
+            .edw-icon,
+            .icon {
+                margin: 0px;
+                font-size: $edw-icon-size-small;
+                height: $edw-icon-size-small;
+                width: $edw-icon-size-small;
+            }
+        }
+
+        .view-course-btn {
+            align-self: center;
+            max-width: 250px;
+            width: 100%;
+
+            @include media-breakpoint-down(md) {
+                width: 100%;
+                max-width: unset;
+            }
+        }
+    }
+
+}
+
+.category-description-wrapper {
+    @extend .para-regular-2;
+    color: $paragraph-color;
+
+}
+
+#course-archive-main-container {
+    .rating-short-design{
+        div{
+           span{
+              order: 2;
+              text-align: right;
+              margin-left: 0.25rem;
+           }
+        }
+    }
+    .filters-wrapper {
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 16px;
+        align-items: center;
+        padding-bottom: 16px;
+        border-bottom: 1px solid $medium-border;
+
+        @include media-breakpoint-down(md) {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: $flex-gap-24;
+        }
+
+        @include media-breakpoint-down(sm) {
+            gap: $flex-gap-16;
+            border-bottom: unset;
+        }
+
+        .all-filters-wrapper {
+            justify-content: center;
+            align-items: center;
+            gap: $flex-gap-16;
+
+            .filter-option {
+                overflow: hidden;
+                max-width: calc(100% - 60px);
+                text-overflow: ellipsis;
+                float: left !important;
+                margin-left: 14px;
+            }
+            .dropdown-toggle:after {
+                // margin-left: 0!important;
+                clear: both;
+            }
+
+            @include media-breakpoint-up(sm) {
+                [data-id="sortfilter"] {
+                    .filter-option {
+                        float: unset !important;
+                        margin-left: 0 !important;
+                    }
+                }
+            }
+            .categoryfiltermenu {
+                .dropdown-menu {
+                    max-width: 500px;
+                }
+            }
+
+            @include media-breakpoint-down(sm) {
+                flex-direction: row;
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+        }
+
+        .course-counter {
+            color: $paragraph-color;
+        }
+
+        .bootstrap-select.btn-group .dropdown-menu {
+            &.inner {
+                max-height: 340px !important;
+                overflow-y: auto;
+            }
+
+            li {
+                margin: 0px;
+                padding: 0px;
+                border: unset;
+
+                a {
+                    @extend .text-link-regular;
+                    color: $form-paragraph-color-default;
+                    padding: 16px 24px;
+                    margin: 0px;
+                    width: 100%;
+                    max-width: 100%;
+
+                    &:hover {
+                        background-color: $light-border;
+                    }
+                }
+            }
+
+            &.show {
+                @include media-breakpoint-down(sm) {
+                    width: 100%;
+                }
+            }
+        }
+
+
+        .categoryfilter,
+        .sortfilter {
+            border: 1px solid $form-medium-color-default;
+            border-radius: 5px;
+            background-color: transparent;
+            // @extend .h-semibold-6;
+            @include get_typography(6, semibold, all);
+            margin: 0px;
+            color: $form-paragraph-color-default;
+            padding: 0px;
+            max-height: $filter-max-height;
+            outline: unset;
+            max-width: 154px;
+            overflow: hidden;
+
+            @include media-breakpoint-down(sm) {
+                max-width: unset;
+            }
+
+            &:focus {
+                outline: none !important;
+            }
+
+            .filter-option.pull-left {
+                float: unset;
+                text-align: center;
+                display: unset;
+            }
+        }
+
+        [aria-controls="moreactionsmenu"] {
+            border: 1px solid $form-medium-color-default;
+            padding: 9px 10px;
+            color: $form-paragraph-color-default;
+            max-height: $filter-max-height;
+            // @extend .h-semibold-6;
+            @include get_typography(6, semibold, all);
+
+        }
+
+        .simplesearchform {
+            // max-width: 193px;
+            .input-group {
+                padding: 8px 12px;
+                border: 1px solid $form-medium-color-default;
+                border-radius: 5px;
+                min-width: 193px;
+                @include media-breakpoint-down(sm) {
+                    width: 100%;
+                }
+
+                // max-width: 193px;
+                .input-group-append {
+                    height: fit-content;
+                    width: fit-content;
+
+                    button {
+                        height: $edw-common-icon-size;
+                        width: $edw-common-icon-size;
+                        z-index: 1;
+                        .edw-icon {
+                            font-size: $edw-icon-size-large;
+                            height: 100%;
+                            width: 100%;
+                            color: $ic-default;
+                        }
+                    }
+                }
+            }
+
+            input.form-control {
+                @extend .navigation-text;
+                margin-left: 8px;
+                padding: 0px;
+                height: unset;
+                background-color: transparent;
+                border: unset;
+            }
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: row;
+            gap: $flex-gap-16;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+
+            .edw-icon {
+                font-size: $edw-big-size-icon;
+                height: $edw-big-size-icon;
+                width: $edw-big-size-icon;
+                color: $ic-default;
+            }
+
+            a {
+                max-width: fit-content;
+                padding: 0px;
+                border: unset;
+                outline: none;
+                border-radius: unset;
+
+                &.btn-primary {
+                    background-color: transparent !important;
+                    border: unset;
+
+                    .edw-icon {
+                        color: $blue;
+                    }
+                }
+            }
+
+            &.view-buttons {
+                @include media-breakpoint-down(sm) {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    .tag-wrapper {
+        .tag_list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: $flex-gap-8;
+            margin: 0px;
+            padding: 0px;
+
+            li.badge-primary {
+                background-color: $ascent-bg-color;
+            }
+        }
+    }
+
+    .edw-course-card-grid {
+        @include all-view-common-properties();
+
+        .edw-card-design-ft {
+            .ernr-lesson-wrapper {
+                flex-direction: column;
+                gap: 8px;
+                // justify-content: space-between;
+
+                // @include media-breakpoint-down(sm) {
+                //     flex-direction: column;
+                //     gap: 16px;
+                // }
+            }
+        }
+    }
+
+    .edw-course-list {
+        @include all-view-common-properties();
+    }
+
+    .edw-course-summary-container {
+        .edw-course-list {
+            .edw-card-design-ft {
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                gap: $flex-gap-24;
+
+                @include media-breakpoint-down(md) {
+                    flex-direction: column;
+                    gap: $flex-gap-24;
+                }
+
+                @include media-breakpoint-down(sm) {
+                    gap: $flex-gap-16;
+                    flex-direction: column;
+                    align-items: unset;
+                }
+
+                .ernr-lesson-wrapper {
+                    width: 100%;
+                    flex-direction: row;
+                    align-items: center;
+                    padding: 0px;
+                    gap: $flex-gap-16;
+
+                    @include media-breakpoint-down(md) {
+                        width: 100%;
+                        justify-content: space-between;
+                    }
+
+                    @include media-breakpoint-down(sm) {
+                        flex-direction: column;
+                        align-items: unset;
+                        gap: $flex-gap-16;
+                    }
+
+                }
+
+                .view-button-wrapper {
+                    width: 100%;
+                    gap: $flex-gap-16;
+                    justify-content: flex-end;
+
+                    @include media-breakpoint-down(md) {
+                        justify-content: unset;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+    .cards-pagination {
+        margin-top: 32px;
+
+        .pagination {
+            ul {
+                margin: 0px;
+
+                .page-item {
+                    .page-link {
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 42px;
+                        width: 38px;
+                        border-radius: 4px 0px 0px 4px;
+                        border: 1px solid $medium-border;
+                        background: transparent;
+                        @include get_typography(5, semibold, mobile);
+                        color: $paragraph-color;
+
+                        .edw-icon {
+                            font-size: $edw-small-icon-size;
+                            height: $edw-small-icon-size;
+                            width: $edw-small-icon-size;
+                        }
+
+                    }
+
+                    &.active {
+                        .page-link {
+                            color: $blue;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

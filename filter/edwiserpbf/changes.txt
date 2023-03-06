@@ -1,0 +1,7 @@
+CHANGES LOG
+
+Version 4.0.0
+=============
+
+Moodle 4.0 compatible version of Edwiser Page Builder Filter plugin.
+It allows users add courses and categories blocks using Edwiser Page Builder plugin. 
