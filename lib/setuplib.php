@@ -549,7 +549,7 @@ function get_exception_info($ex) {
     if (function_exists('clean_text')) {
         $message = clean_text($message);
     } else {
-        $message = htmlspecialchars($message);
+        $message = htmlspecialchars($message, ENT_COMPAT);
     }
 
     if (!empty($CFG->errordocroot)) {
@@ -629,6 +629,9 @@ function generate_uuid() {
  */
 function get_docs_url($path = null) {
     global $CFG;
+    if ($path === null) {
+        $path = '';
+    }
 
     // Absolute URLs are used unmodified.
     if (substr($path, 0, 7) === 'http://' || substr($path, 0, 8) === 'https://') {
@@ -830,7 +833,7 @@ function hash_local_config_cache() {
  * setup.php.
  */
 function initialise_fullme() {
-    global $CFG, $FULLME, $ME, $SCRIPT, $FULLSCRIPT;
+    global $CFG, $FULLME, $ME, $SCRIPT, $FULLSCRIPT, $DB;
 
     // Detect common config error.
     if (substr($CFG->wwwroot, -1) == '/') {
@@ -841,6 +844,22 @@ function initialise_fullme() {
         initialise_fullme_cli();
         return;
     }
+
+    // IOMAD - Set the theme if the server hostname matches one of ours.
+    if(!CLI_SCRIPT && !during_initial_install()){
+        $CFG->wwwrootdefault = $CFG->wwwroot;
+
+        // Does this match a company hostname?
+        if ($DB->get_manager()->table_exists('company') &&
+            ($companyrec = $DB->get_record('company', array('hostname' => $_SERVER['SERVER_NAME'])))) {
+            $company = new company($companyrec->id);
+
+            // Set the wwwroot to the company one using the same protocol.
+            $CFG->wwwroot  = $company->get_wwwroot();
+
+        }
+    }
+
     if (!empty($CFG->overridetossl)) {
         if (strpos($CFG->wwwroot, 'http://') === 0) {
             $CFG->wwwroot = str_replace('http:', 'https:', $CFG->wwwroot);
@@ -883,6 +902,9 @@ function initialise_fullme() {
                 throw new moodle_exception('requirecorrectaccess', 'error', '', null,
                     'You called ' . $calledurl .', you should have called ' . $correcturl);
             }
+            require_once($CFG->dirroot . '/local/iomad/lib/iomad.php');
+
+            iomad::check_redirect($wwwroot, $rurl);
             redirect($CFG->wwwroot, get_string('wwwrootmismatch', 'error', $CFG->wwwroot), 3);
         }
     }
@@ -1436,7 +1458,7 @@ function redirect_if_major_upgrade_required() {
         $url = $CFG->wwwroot . '/' . $CFG->admin . '/index.php';
         @header($_SERVER['SERVER_PROTOCOL'] . ' 303 See Other');
         @header('Location: ' . $url);
-        echo bootstrap_renderer::plain_redirect_message(htmlspecialchars($url));
+        echo bootstrap_renderer::plain_redirect_message(htmlspecialchars($url, ENT_COMPAT));
         exit;
     }
 }
@@ -1876,7 +1898,7 @@ function set_access_log_user() {
                 apache_note('MOODLEUSER', $logname);
             }
 
-            if ($logmethod == 'header') {
+            if ($logmethod == 'header' && !headers_sent()) {
                 header("X-MOODLEUSER: $logname");
             }
         }

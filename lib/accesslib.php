@@ -595,7 +595,7 @@ function has_capability($capability, context $context, $user = null, $doanything
  */
 function has_any_capability(array $capabilities, context $context, $user = null, $doanything = true) {
     foreach ($capabilities as $capability) {
-        if (has_capability($capability, $context, $user, $doanything)) {
+        if (iomad::has_capability($capability, $context, $user, $doanything)) {
             return true;
         }
     }
@@ -1163,7 +1163,14 @@ function get_role_archetypes() {
         'student'        => 'student',
         'guest'          => 'guest',
         'user'           => 'user',
-        'frontpage'      => 'frontpage'
+        'frontpage'      => 'frontpage',
+        'companymanager'           => 'companymanager',
+        'companydepartmentmanager' => 'companydepartmentmanager',
+        'companycourseeditor'      => 'companycourseeditor',
+        'companycoursenoneditor'   => 'companycoursenoneditor',
+        'clientadministrator'      => 'clientadministrator',
+        'clientreporter'           => 'clientreporter',
+        'companyreporter'          => 'companyreporter'
     );
 }
 
@@ -2155,6 +2162,13 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'companymanager'           => array(),
+            'companydepartmentmanager' => array(),
+            'companycourseeditor'      => array(),
+            'companycoursenoneditor'   => array(),
+            'clientadministrator'      => array(),
+            'clientreporter'           => array(),
+            'companyreporter'          => array(),
         ),
         'override' => array(
             'manager'        => array('manager', 'coursecreator', 'editingteacher', 'teacher', 'student', 'guest', 'user', 'frontpage'),
@@ -2165,6 +2179,13 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'companymanager'           => array(),
+            'companydepartmentmanager' => array(),
+            'companycourseeditor'      => array(),
+            'companycoursenoneditor'   => array(),
+            'clientadministrator'      => array(),
+            'clientreporter'           => array(),
+            'companyreporter'          => array(),
         ),
         'switch' => array(
             'manager'        => array('editingteacher', 'teacher', 'student', 'guest'),
@@ -2175,6 +2196,13 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'companymanager'           => array(),
+            'companydepartmentmanager' => array(),
+            'companycourseeditor'      => array('companycoursenoneditor', 'student', 'guest'),
+            'companycoursenoneditor'   => array('student', 'guest'),
+            'clientadministrator'      => array(),
+            'clientreporter'           => array(),
+            'companyreporter'          => array(),
         ),
         'view' => array(
             'manager'        => array('manager', 'coursecreator', 'editingteacher', 'teacher', 'student', 'guest', 'user', 'frontpage'),
@@ -2185,6 +2213,13 @@ function get_default_role_archetype_allows($type, $archetype) {
             'guest'          => array(),
             'user'           => array(),
             'frontpage'      => array(),
+            'companymanager'           => array(),
+            'companydepartmentmanager' => array(),
+            'companycourseeditor'      => array(),
+            'companycoursenoneditor'   => array(),
+            'clientadministrator'      => array(),
+            'clientreporter'           => array(),
+            'companyreporter'          => array(),
         ),
     );
 
@@ -3504,7 +3539,14 @@ function get_default_contextlevels($rolearchetype) {
         'student'        => array(CONTEXT_COURSE, CONTEXT_MODULE),
         'guest'          => array(),
         'user'           => array(),
-        'frontpage'      => array());
+        'frontpage'      => array(),
+        'companymanager'           => array(),
+        'companydepartmentmanager' => array(),
+        'companycourseeditor'      => array(),
+        'companycoursenoneditor'   => array(),
+        'clientadministrator'      => array(CONTEXT_SYSTEM),
+        'clientreporter'           => array(CONTEXT_SYSTEM),
+        'companyreporter'          => array());
 
     if (isset($defaults[$rolearchetype])) {
         return $defaults[$rolearchetype];
@@ -4505,6 +4547,13 @@ function role_get_name(stdClass $role, $context = null, $rolenamedisplay = ROLEN
             case 'guest':           $original = get_string('guest'); break;
             case 'user':            $original = get_string('authenticateduser'); break;
             case 'frontpage':       $original = get_string('frontpageuser', 'role'); break;
+            case 'companymanager':           $original = get_string('companymanager_role', 'block_iomad_company_manager'); break;
+            case 'companydepartmentmanager': $original = get_string('companydepartmentmanager_role', 'block_iomad_company_admin'); break;
+            case 'companycourseeditor':      $original = get_string('companycourseeditor_role', 'block_iomad_company_admin'); break;
+            case 'companycoursenoneditor':   $original = get_string('companycoursenoneditor_role', 'block_iomad_company_admin'); break;
+            case 'clientadministrator':      $original = get_string('clientadministrator_role', 'block_iomad_company_admin'); break;
+            case 'clientreporter':           $original = get_string('clientreporter_role', 'block_iomad_company_admin'); break;
+            case 'companyreporter':          $original = get_string('companyreporter_role', 'block_iomad_company_admin'); break;
             // We should not get here, the role UI should require the name for custom roles!
             default:                $original = $role->shortname; break;
         }
@@ -4559,6 +4608,13 @@ function role_get_description(stdClass $role) {
         case 'guest':           return get_string('guestdescription');
         case 'user':            return get_string('authenticateduserdescription');
         case 'frontpage':       return get_string('frontpageuserdescription', 'role');
+        case 'companymanager':           return get_string('companymanager_role', 'block_iomad_company_manager');
+        case 'companydepartmentmanager': return get_string('companydepartmentmanager_role', 'block_iomad_company_admin');
+        case 'companycourseeditor':      return get_string('companycourseeditor_role', 'block_iomad_company_admin');
+        case 'companycoursenoneditor':   return get_string('companycoursenoneditor_role', 'block_iomad_company_admin');
+        case 'clientadministrator':      return get_string('clientadministrator_role', 'block_iomad_company_admin');
+        case 'clientreporter':           return get_string('clientreporter_role', 'block_iomad_company_admin');
+        case 'companyreporter':          return get_string('companyreporter_role', 'block_iomad_company_admin');
         default:                return '';
     }
 }

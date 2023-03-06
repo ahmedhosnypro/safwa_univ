@@ -505,6 +505,11 @@ class profile_field_base {
             return true;
         }
 
+        // IOMAD: is this a company manager and can they edit this user.
+        if ((company::check_can_manage($this->userid) || empty($this->userid)) && iomad::has_capability('block/iomad_company_admin:user_create', $systemcontext)) {
+            return true;
+        }
+
         // Checking for mentors have capability to edit user's profile.
         if ($this->userid > 0) {
             $usercontext = context_user::instance($this->userid);
@@ -582,6 +587,15 @@ class profile_field_base {
     public function get_field_properties() {
         return array(PARAM_RAW, NULL_NOT_ALLOWED);
     }
+
+    /**
+     * Check if the field should convert the raw data into user-friendly data when exporting
+     *
+     * @return bool
+     */
+    public function is_transform_supported(): bool {
+        return false;
+    }
 }
 
 /**
@@ -602,8 +616,17 @@ function profile_get_user_fields_with_data(int $userid): array {
     if ($userid > 0) {
         $sql .= 'LEFT JOIN {user_info_data} uind ON uif.id = uind.fieldid AND uind.userid = :userid ';
     }
+    $params = array('userid' => $userid);
+    // IOMAD - Filter the categories
+    if (!iomad::has_capability('block/iomad_company_admin:company_view_all', context_system::instance())) {
+        $sql .= " AND (uif.categoryid IN (
+                  SELECT c.profileid FROM {company} c JOIN {company_users} cu ON (c.id = cu.companyid AND cu.userid = :companyuserid))
+                  OR uif.categoryid IN (
+                  SELECT id FROM {user_info_category} WHERE id NOT IN (SELECT profileid from {company}))) ";
+        $params['companyuserid'] = $userid;
+    }
     $sql .= 'ORDER BY uic.sortorder ASC, uif.sortorder ASC ';
-    $fields = $DB->get_records_sql($sql, ['userid' => $userid]);
+    $fields = $DB->get_records_sql($sql, $params);
     $data = [];
     foreach ($fields as $field) {
         require_once($CFG->dirroot . '/user/profile/field/' . $field->datatype . '/field.class.php');
@@ -651,6 +674,10 @@ function profile_load_data(stdClass $user): void {
  */
 function profile_definition(MoodleQuickForm $mform, int $userid = 0): void {
     $categories = profile_get_user_fields_with_data_by_category($userid);
+
+    // IOMAD - Filter categories which only apply to this company.
+    $categories = iomad::iomad_filter_profile_categories($categories, $userid);
+
     foreach ($categories as $categoryid => $fields) {
         // Check first if *any* fields will be displayed.
         $fieldstodisplay = [];

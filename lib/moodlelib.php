@@ -4664,6 +4664,19 @@ function complete_user_login($user, array $extrauserinfo = []) {
     // Select password change url.
     $userauth = get_auth_plugin($USER->auth);
 
+    // IOMAD: if we have a SESSION for the company
+    // Check that it matches the user's actual company.
+    if (!empty($SESSION->currenteditingcompany)) {
+        if ($company = company::by_userid($USER->id, true)) {
+            if ($company->id != $SESSION->currenteditingcompany) {
+                $SESSION->currenteditingcompany = $company->id;
+                $SESSION->company = $company;
+            }
+        } else {
+            unset($SESSION->currenteditingcompany);
+        }
+    }
+
     // Check whether the user should be changing password.
     if (get_user_preferences('auth_forcepasswordchange', false)) {
         if ($userauth->can_change_password()) {
@@ -8413,7 +8426,7 @@ function count_words($string) {
     // Now remove HTML tags.
     $string = strip_tags($string);
     // Decode HTML entities.
-    $string = html_entity_decode($string);
+    $string = html_entity_decode($string, ENT_COMPAT);
 
     // Now, the word count is the number of blocks of characters separated
     // by any sort of space. That seems to be the definition used by all other systems.
@@ -8435,7 +8448,7 @@ function count_words($string) {
  */
 function count_letters($string) {
     $string = strip_tags($string); // Tags are out now.
-    $string = html_entity_decode($string);
+    $string = html_entity_decode($string, ENT_COMPAT);
     $string = preg_replace('/[[:space:]]*/', '', $string); // Whitespace are out now.
 
     return core_text::strlen($string);

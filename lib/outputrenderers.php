@@ -357,7 +357,24 @@ class renderer_base {
      * @return moodle_url|false
      */
     public function get_logo_url($maxwidth = null, $maxheight = 200) {
-        global $CFG;
+        global $CFG, $DB, $SESSION;
+
+        // IOMAD
+        if (!empty($SESSION->currenteditingcompany)) {
+            $logo = get_config('core_admin', 'logo'.$SESSION->currenteditingcompany);
+            if (!empty($logo)) {
+                // 200px high is the default image size which should be displayed at 100px in the page to account for retina displays.
+                // It's not worth the overhead of detecting and serving 2 different images based on the device.
+
+                // Hide the requested size in the file path.
+                $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+
+                // Use $CFG->themerev to prevent browser caching when the file changes.
+                return moodle_url::make_pluginfile_url(context_system::instance()->id, 'core_admin', 'logo'.$SESSION->currenteditingcompany, $filepath,
+                    theme_get_revision(), $logo);
+            }
+        }
+
         $logo = get_config('core_admin', 'logo');
         if (empty($logo)) {
             return false;
@@ -382,7 +399,21 @@ class renderer_base {
      * @return moodle_url|false
      */
     public function get_compact_logo_url($maxwidth = 300, $maxheight = 300) {
-        global $CFG;
+        global $CFG, $DB, $SESSION;
+
+        // IOMAD
+        if (!empty($SESSION->currenteditingcompany)) {
+            $logo = get_config('core_admin', 'logocompact'.$SESSION->currenteditingcompany);
+            if (!empty($logo)) {
+                // Hide the requested size in the file path.
+                $filepath = ((int) $maxwidth . 'x' . (int) $maxheight) . '/';
+
+                // Use $CFG->themerev to prevent browser caching when the file changes.
+                return moodle_url::make_pluginfile_url(context_system::instance()->id, 'core_admin', 'logocompact'.$SESSION->currenteditingcompany, $filepath,
+                    theme_get_revision(), $logo);
+            }
+        }
+
         $logo = get_config('core_admin', 'logocompact');
         if (empty($logo)) {
             return false;
@@ -3768,11 +3799,47 @@ EOD;
      * @return string
      */
     public function custom_menu($custommenuitems = '') {
-        global $CFG;
+        global $CFG, $DB;
 
         if (empty($custommenuitems) && !empty($CFG->custommenuitems)) {
             $custommenuitems = $CFG->custommenuitems;
         }
+
+        // IOAMD
+        $systemcontext = \context_system::instance();
+        if (\iomad::has_capability('block/iomad_company_admin:companymanagement_view', $systemcontext) ||
+            \iomad::has_capability('block/iomad_company_admin:usermanagement_view', $systemcontext) ||
+            \iomad::has_capability('block/iomad_company_admin:coursemanagement_view', $systemcontext) ||
+            \iomad::has_capability('block/iomad_company_admin:licensemanagement_view', $systemcontext) ||
+            \iomad::has_capability('block/iomad_company_admin:competencymanagement_view', $systemcontext) ||
+            \iomad::has_capability('block/iomad_commerce:admin_view', $systemcontext) ||
+            \iomad::has_capability('block/iomad_microlearning:view', $systemcontext) ||
+            \iomad::has_capability('block/iomad_reports:view', $systemcontext)) {
+            $iomadlink = "-" . get_string('dashboard', 'block_iomad_company_admin') . "|" .
+                         '/blocks/iomad_company_admin/index.php' . "\n\r";
+        } else {
+            $iomadlink = "";
+        }
+
+        // Deal with company custom and shop menu items.
+        $shoplink = "";
+        if ($companyid = \iomad::get_my_companyid(\context_system::instance(), false)) {
+            if ($companyrec = $DB->get_record('company', array('id' => $companyid))) {
+                if (!empty($companyrec->custommenuitems)) {
+                    $custommenuitems = $companyrec->custommenuitems;
+                }
+                if (\block_iomad_commerce\helper::is_commerce_configured() &&
+                    ($CFG->commerce_admin_enableall || !empty($companyrec->ecommerce))) {
+                    $shoplink = \block_iomad_commerce\helper::get_shop_menu_link($companyrec);
+                }
+            }
+        }
+
+        $custommenuitems = $iomadlink . $shoplink . $custommenuitems;
+
+        $custommenu = new custom_menu($custommenuitems, current_language());
+        return $this->render_custom_menu($custommenu);
+
         $custommenu = new custom_menu($custommenuitems, current_language());
         return $this->render_custom_menu($custommenu);
     }
@@ -4277,8 +4344,21 @@ EOD;
      * @return moodle_url The moodle_url for the favicon
      */
     public function favicon() {
+        global $SESSION;
+
         $logo = null;
         if (!during_initial_install()) {
+
+            // IOMAD
+            if (!empty($SESSION->currenteditingcompany)) {
+                $logo = get_config('core_admin', 'favicon'.$SESSION->currenteditingcompany);
+                if (!empty($logo)) {
+                    // Use $CFG->themerev to prevent browser caching when the file changes.
+                    return moodle_url::make_pluginfile_url(context_system::instance()->id, 'core_admin', 'favicon'.$SESSION->currenteditingcompany, '64x64/',
+                        theme_get_revision(), $logo);
+                }
+            }
+
             $logo = get_config('core_admin', 'favicon');
         }
         if (empty($logo)) {

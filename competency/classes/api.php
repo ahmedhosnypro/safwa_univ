@@ -38,6 +38,8 @@ use moodle_exception;
 use moodle_url;
 use required_capability_exception;
 
+require_once($CFG->dirroot . '/local/iomad/lib/iomad.php');
+
 /**
  * Class for doing things with competency frameworks.
  *
@@ -582,6 +584,14 @@ class api {
 
         $framework = $framework->create();
 
+        /* Iomad stuff */
+        // Set the companyid
+        global $CFG;
+        require_once($CFG->dirroot . '/local/iomad/lib/iomad.php');
+        $companyid = \iomad::get_my_companyid(context_system::instance(), false);
+
+       $framework->data['companyid'] = $companyid;
+
         // Trigger a competency framework created event.
         \core\event\competency_framework_created::create_from_framework($framework)->trigger();
 
@@ -650,6 +660,14 @@ class api {
         } catch (\Exception $e) {
             $transaction->rollback($e);
         }
+
+        /* Iomad stuff */
+        // Set the companyid
+        global $CFG;
+        require_once($CFG->dirroot . '/local/iomad/lib/iomad.php');
+        $companyid = \iomad::get_my_companyid(context_system::instance(), false);
+
+        $framework->data['companyid'] = $companyid;
 
         // Trigger a competency framework created event.
         \core\event\competency_framework_created::create_from_framework($framework)->trigger();
@@ -852,6 +870,17 @@ class api {
             $select .= " AND ($sqlnamelike OR $sqlidnlike) ";
             $inparams['namelike'] = '%' . $DB->sql_like_escape($query) . '%';
             $inparams['idnlike'] = '%' . $DB->sql_like_escape($query) . '%';
+        }
+
+        // IOMAD.  Set up the user's companyid if they aren't an adamin.
+        if (!\iomad::has_capability('block/iomad_company_admin:company_view_all', $context)) {
+            $companyid = \iomad::get_my_companyid(context_system::instance());
+            $companyframeworks = \iomad::get_company_frameworkids($companyid);
+            if (!empty($companyframeworks)) {
+                $select .= " AND id IN (" . implode(',', array_keys($companyframeworks)) . ")";
+            } else {
+                $select .= " AND 1 = 2";
+            }
         }
 
         return competency_framework::get_records_select($select, $inparams, $sort . ' ' . $order, '*', $skip, $limit);
@@ -1780,6 +1809,14 @@ class api {
         // OK - all set.
         $template = $template->create();
 
+        /* Iomad stuff */
+        // Set the companyid
+        global $CFG;
+        require_once($CFG->dirroot . '/local/iomad/lib/iomad.php');
+        $companyid = \iomad::get_my_companyid(context_system::instance(), false);
+
+        $template->data['companyid'] = $companyid;
+
         // Trigger a template created event.
         \core\event\competency_template_created::create_from_template($template)->trigger();
 
@@ -1817,6 +1854,14 @@ class api {
         foreach ($competencies as $competency) {
             self::add_competency_to_template($duplicatedtemplate->get('id'), $competency->get('id'));
         }
+
+        /* Iomad stuff */
+        // Set the companyid
+        global $CFG;
+        require_once($CFG->dirroot . '/local/iomad/lib/iomad.php');
+        $companyid = \iomad::get_my_companyid(context_system::instance(), false);
+
+        $duplicatedtemplate->data['companyid'] = $companyid;
 
         // Trigger a template created event.
         \core\event\competency_template_created::create_from_template($duplicatedtemplate)->trigger();
@@ -2021,6 +2066,18 @@ class api {
             $select .= " AND visible = :visible";
             $params['visible'] = 1;
         }
+
+        // IOMAD.  Set up the user's companyid.
+        if (!\iomad::has_capability('block/iomad_company_admin:company_view_all', $context)) {
+            $companyid = \iomad::get_my_companyid(context_system::instance());
+            $companytemplates = \iomad::get_company_templateids($companyid);
+            if (!empty($companytemplates)) {
+                $select .= " AND id IN (" . implode(',', array_keys($companytemplates)) . ")";
+            } else {
+                $select .= " AND 1 = 2";
+            }
+        }
+
         return $template->get_records_select($select, $params, $orderby, '*', $skip, $limit);
     }
 
@@ -2072,7 +2129,7 @@ class api {
              throw new required_capability_exception($context, 'moodle/competency:templateview', 'nopermissions', '');
         }
 
-        if (has_capability('moodle/competency:templatemanage', $context)) {
+        if (\iomad::has_capability('moodle/competency:templatemanage', $context)) {
             $onlyvisible = 0;
         }
 
@@ -2097,7 +2154,7 @@ class api {
              throw new required_capability_exception($context, 'moodle/competency:templateview', 'nopermissions', '');
         }
 
-        if (has_capability('moodle/competency:templatemanage', $context)) {
+        if (\iomad::has_capability('moodle/competency:templatemanage', $context)) {
             $onlyvisible = 0;
         }
 
