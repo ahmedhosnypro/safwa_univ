@@ -440,12 +440,16 @@ class profile_field_base {
     /**
      * Check if the field data is visible to the current user
      * @internal This method should not generally be overwritten by child classes.
+     *
+     * @param context|null $context
      * @return bool
      */
-    public function is_visible() {
+    public function is_visible(?context $context = null): bool {
         global $USER, $COURSE;
 
-        $context = ($this->userid > 0) ? context_user::instance($this->userid) : context_system::instance();
+        if ($context === null) {
+            $context = ($this->userid > 0) ? context_user::instance($this->userid) : context_system::instance();
+        }
 
         switch ($this->field->visible) {
             case PROFILE_VISIBLE_TEACHERS:
@@ -502,11 +506,6 @@ class profile_field_base {
         }
 
         if (has_capability('moodle/user:update', $systemcontext)) {
-            return true;
-        }
-
-        // IOMAD: is this a company manager and can they edit this user.
-        if ((company::check_can_manage($this->userid) || empty($this->userid)) && iomad::has_capability('block/iomad_company_admin:user_create', $systemcontext)) {
             return true;
         }
 
@@ -599,12 +598,31 @@ class profile_field_base {
 }
 
 /**
+ * Return profile field instance for given type
+ *
+ * @param string $type
+ * @param int $fieldid
+ * @param int $userid
+ * @param stdClass|null $fielddata
+ * @return profile_field_base
+ */
+function profile_get_user_field(string $type, int $fieldid = 0, int $userid = 0, ?stdClass $fielddata = null): profile_field_base {
+    global $CFG;
+
+    require_once("{$CFG->dirroot}/user/profile/field/{$type}/field.class.php");
+
+    // Return instance of profile field type.
+    $profilefieldtype = "profile_field_{$type}";
+    return new $profilefieldtype($fieldid, $userid, $fielddata);
+}
+
+/**
  * Returns an array of all custom field records with any defined data (or empty data), for the specified user id.
  * @param int $userid
  * @return profile_field_base[]
  */
 function profile_get_user_fields_with_data(int $userid): array {
-    global $DB, $CFG;
+    global $DB;
 
     // Join any user info data present with each user info field for the user object.
     $sql = 'SELECT uif.*, uic.name AS categoryname ';
@@ -616,24 +634,12 @@ function profile_get_user_fields_with_data(int $userid): array {
     if ($userid > 0) {
         $sql .= 'LEFT JOIN {user_info_data} uind ON uif.id = uind.fieldid AND uind.userid = :userid ';
     }
-    $params = array('userid' => $userid);
-    // IOMAD - Filter the categories
-    if (!iomad::has_capability('block/iomad_company_admin:company_view_all', context_system::instance())) {
-        $sql .= " AND (uif.categoryid IN (
-                  SELECT c.profileid FROM {company} c JOIN {company_users} cu ON (c.id = cu.companyid AND cu.userid = :companyuserid))
-                  OR uif.categoryid IN (
-                  SELECT id FROM {user_info_category} WHERE id NOT IN (SELECT profileid from {company}))) ";
-        $params['companyuserid'] = $userid;
-    }
     $sql .= 'ORDER BY uic.sortorder ASC, uif.sortorder ASC ';
-    $fields = $DB->get_records_sql($sql, $params);
+    $fields = $DB->get_records_sql($sql, ['userid' => $userid]);
     $data = [];
     foreach ($fields as $field) {
-        require_once($CFG->dirroot . '/user/profile/field/' . $field->datatype . '/field.class.php');
-        $classname = 'profile_field_' . $field->datatype;
         $field->hasuserdata = !empty($field->hasuserdata);
-        /** @var profile_field_base $fieldobject */
-        $fieldobject = new $classname($field->id, $userid, $field);
+        $fieldobject = profile_get_user_field($field->datatype, $field->id, $userid, $field);
         $fieldobject->set_category_name($field->categoryname);
         unset($field->categoryname);
         $data[] = $fieldobject;
@@ -674,10 +680,6 @@ function profile_load_data(stdClass $user): void {
  */
 function profile_definition(MoodleQuickForm $mform, int $userid = 0): void {
     $categories = profile_get_user_fields_with_data_by_category($userid);
-
-    // IOMAD - Filter categories which only apply to this company.
-    $categories = iomad::iomad_filter_profile_categories($categories, $userid);
-
     foreach ($categories as $categoryid => $fields) {
         // Check first if *any* fields will be displayed.
         $fieldstodisplay = [];

@@ -98,28 +98,14 @@ class primary implements renderable, templatable {
      * @return array
      */
     protected function get_custom_menu(renderer_base $output): array {
-        global $CFG, $DB;
-
-        // Deal with company custom menu items.
-        $custommenuitems = $CFG->custommenuitems;
-        if ($companyid = \iomad::get_my_companyid(\context_system::instance(), false)) {
-            if ($companyrec = $DB->get_record('company', array('id' => $companyid))) {
-                if (!empty($companyrec->custommenuitems)) {
-                    $custommenuitems = $companyrec->custommenuitems;
-                }
-
-                if (\block_iomad_commerce\helper::is_commerce_configured() &&
-                    ($CFG->commerce_admin_enableall || !empty($companyrec->ecommerce))) {
-                    $custommenuitems = \block_iomad_commerce\helper::get_shop_menu_link($companyrec) . $custommenuitems;
-                }
-            }
-        }
+        global $CFG;
 
         // Early return if a custom menu does not exists.
-        if (empty($custommenuitems)) {
+        if (empty($CFG->custommenuitems)) {
             return [];
         }
 
+        $custommenuitems = $CFG->custommenuitems;
         $currentlang = current_language();
         $custommenunodes = custom_menu::convert_text_to_menu_nodes($custommenuitems, $currentlang);
         $nodes = [];

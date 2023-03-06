@@ -242,9 +242,6 @@ function theme_build_css_for_themes($themeconfigs = [], $directions = ['rtl', 'l
         }
     }
 
-    // Iomad - This can break our themes.
-    purge_caches();
-
     return $themescss;
 }
 
@@ -1857,7 +1854,7 @@ class theme_config {
         // Now resolve all theme settings or do any other postprocessing.
         // This needs to be done before calling core parser, since the parser strips [[settings]] tags.
         $csspostprocess = $this->csspostprocess;
-        if (function_exists($csspostprocess)) {
+        if ($csspostprocess && function_exists($csspostprocess)) {
             $css = $csspostprocess($css, $this);
         }
 

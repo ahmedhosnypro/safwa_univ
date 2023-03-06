@@ -32,12 +32,6 @@
         throw new \moodle_exception('unspecifycourseid', 'error');
     }
 
-    // Iomad - check if a user can even see the course.
-    if (!iomad::iomad_check_course($id)) {
-        // Set it to 0 so it fails DB get_record.
-        $params['id'] = 0;
-    }
-
     $course = $DB->get_record('course', $params, '*', MUST_EXIST);
 
     $urlparams = array('id' => $course->id);
@@ -200,7 +194,11 @@
                 if ($course->id == SITEID) {
                     redirect($CFG->wwwroot . '/?redirect=0');
                 } else {
-                    redirect(course_get_url($course));
+                    if ($format->get_course_display() == COURSE_DISPLAY_MULTIPAGE) {
+                        redirect(course_get_url($course));
+                    } else {
+                        redirect(course_get_url($course, $destsection));
+                    }
                 }
             } else {
                 echo $OUTPUT->notification('An error occurred while moving a section');

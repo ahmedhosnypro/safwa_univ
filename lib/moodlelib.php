@@ -2362,18 +2362,6 @@ function userdate_htmltime($date, $format = '', $timezone = 99, $fixday = true, 
  * @since Moodle 2.3.3
  */
 function date_format_string($date, $format, $tz = 99) {
-    global $CFG;
-
-    $localewincharset = null;
-    // Get the calendar type user is using.
-    if ($CFG->ostype == 'WINDOWS') {
-        $calendartype = \core_calendar\type_factory::get_calendar_instance();
-        $localewincharset = $calendartype->locale_win_charset();
-    }
-
-    if ($localewincharset) {
-        $format = core_text::convert($format, 'utf-8', $localewincharset);
-    }
 
     date_default_timezone_set(core_date::get_user_timezone($tz));
 
@@ -2390,10 +2378,6 @@ function date_format_string($date, $format, $tz = 99) {
 
     $datestring = core_date::strftime($format, $date);
     core_date::set_default_server_timezone();
-
-    if ($localewincharset) {
-        $datestring = core_text::convert($datestring, $localewincharset, 'utf-8');
-    }
 
     return $datestring;
 }
@@ -2899,7 +2883,8 @@ function require_login($courseorid = null, $autologinguest = true, $cm = null, $
 
     // Check that the user has agreed to a site policy if there is one - do not test in case of admins.
     // Do not test if the script explicitly asked for skipping the site policies check.
-    if (!$USER->policyagreed && !is_siteadmin() && !NO_SITEPOLICY_CHECK) {
+    // Or if the user auth type is webservice.
+    if (!$USER->policyagreed && !is_siteadmin() && !NO_SITEPOLICY_CHECK && $USER->auth !== 'webservice') {
         $manager = new \core_privacy\local\sitepolicy\manager();
         if ($policyurl = $manager->get_redirect_url(isguestuser())) {
             if ($preventredirect) {
@@ -4663,19 +4648,6 @@ function complete_user_login($user, array $extrauserinfo = []) {
 
     // Select password change url.
     $userauth = get_auth_plugin($USER->auth);
-
-    // IOMAD: if we have a SESSION for the company
-    // Check that it matches the user's actual company.
-    if (!empty($SESSION->currenteditingcompany)) {
-        if ($company = company::by_userid($USER->id, true)) {
-            if ($company->id != $SESSION->currenteditingcompany) {
-                $SESSION->currenteditingcompany = $company->id;
-                $SESSION->company = $company;
-            }
-        } else {
-            unset($SESSION->currenteditingcompany);
-        }
-    }
 
     // Check whether the user should be changing password.
     if (get_user_preferences('auth_forcepasswordchange', false)) {
@@ -9317,6 +9289,25 @@ function mtrace($string, $eol="\n", $sleep=0) {
     if ($sleep) {
         sleep($sleep);
     }
+}
+
+/**
+ * Helper to {@see mtrace()} an exception or throwable, including all relevant information.
+ *
+ * @param Throwable $e the error to ouptput.
+ */
+function mtrace_exception(Throwable $e): void {
+    $info = get_exception_info($e);
+
+    $message = $info->message;
+    if ($info->debuginfo) {
+        $message .= "\n\n" . $info->debuginfo;
+    }
+    if ($info->backtrace) {
+        $message .= "\n\n" . format_backtrace($info->backtrace, true);
+    }
+
+    mtrace($message);
 }
 
 /**

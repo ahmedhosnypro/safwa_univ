@@ -54,8 +54,7 @@ class competency_framework_created extends base {
         }
         $event = static::create(array(
             'contextid'  => $framework->get('contextid'),
-            'objectid' => $framework->get('id'),
-            'companyid'  => $framework->data['companyid']
+            'objectid' => $framework->get('id')
         ));
         $event->add_record_snapshot(competency_framework::TABLE, $framework->to_record());
         return $event;

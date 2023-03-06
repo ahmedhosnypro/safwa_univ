@@ -482,11 +482,12 @@ function is_early_init($backtrace) {
 
 /**
  * Returns detailed information about specified exception.
- * @param exception $ex
- * @return object
+ *
+ * @param Throwable $ex any sort of exception or throwable.
+ * @return stdClass standardised info to display. Fields are clear if you look at the end of this function.
  */
-function get_exception_info($ex) {
-    global $CFG, $DB, $SESSION;
+function get_exception_info($ex): stdClass {
+    global $CFG;
 
     if ($ex instanceof moodle_exception) {
         $errorcode = $ex->errorcode;
@@ -633,6 +634,7 @@ function get_docs_url($path = null) {
         $path = '';
     }
 
+    $path = $path ?? '';
     // Absolute URLs are used unmodified.
     if (substr($path, 0, 7) === 'http://' || substr($path, 0, 8) === 'https://') {
         return $path;
@@ -794,8 +796,8 @@ function initialise_local_config_cache() {
     if (!empty($CFG->siteidentifier) && !file_exists($bootstrapcachefile)) {
         $contents = "<?php
 // ********** This file is generated DO NOT EDIT **********
-\$CFG->siteidentifier = '" . addslashes($CFG->siteidentifier) . "';
-\$CFG->bootstraphash = '" . hash_local_config_cache() . "';
+\$CFG->siteidentifier = " . var_export($CFG->siteidentifier, true) . ";
+\$CFG->bootstraphash = " . var_export(hash_local_config_cache(), true) . ";
 // Only if the file is not stale and has not been defined.
 if (\$CFG->bootstraphash === hash_local_config_cache() && !defined('SYSCONTEXTID')) {
     define('SYSCONTEXTID', ".SYSCONTEXTID.");
@@ -833,7 +835,7 @@ function hash_local_config_cache() {
  * setup.php.
  */
 function initialise_fullme() {
-    global $CFG, $FULLME, $ME, $SCRIPT, $FULLSCRIPT, $DB;
+    global $CFG, $FULLME, $ME, $SCRIPT, $FULLSCRIPT;
 
     // Detect common config error.
     if (substr($CFG->wwwroot, -1) == '/') {
@@ -844,22 +846,6 @@ function initialise_fullme() {
         initialise_fullme_cli();
         return;
     }
-
-    // IOMAD - Set the theme if the server hostname matches one of ours.
-    if(!CLI_SCRIPT && !during_initial_install()){
-        $CFG->wwwrootdefault = $CFG->wwwroot;
-
-        // Does this match a company hostname?
-        if ($DB->get_manager()->table_exists('company') &&
-            ($companyrec = $DB->get_record('company', array('hostname' => $_SERVER['SERVER_NAME'])))) {
-            $company = new company($companyrec->id);
-
-            // Set the wwwroot to the company one using the same protocol.
-            $CFG->wwwroot  = $company->get_wwwroot();
-
-        }
-    }
-
     if (!empty($CFG->overridetossl)) {
         if (strpos($CFG->wwwroot, 'http://') === 0) {
             $CFG->wwwroot = str_replace('http:', 'https:', $CFG->wwwroot);
@@ -902,9 +888,6 @@ function initialise_fullme() {
                 throw new moodle_exception('requirecorrectaccess', 'error', '', null,
                     'You called ' . $calledurl .', you should have called ' . $correcturl);
             }
-            require_once($CFG->dirroot . '/local/iomad/lib/iomad.php');
-
-            iomad::check_redirect($wwwroot, $rurl);
             redirect($CFG->wwwroot, get_string('wwwrootmismatch', 'error', $CFG->wwwroot), 3);
         }
     }
