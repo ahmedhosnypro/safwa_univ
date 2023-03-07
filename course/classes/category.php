@@ -2620,7 +2620,7 @@ class core_course_category implements renderable, cacheable_object, IteratorAggr
             $requiredcapability = (array)$requiredcapability;
             $thiscachekey = 'catlist:'. serialize($requiredcapability);
             if ($baselist !== false && ($thislist = $coursecatcache->get($thiscachekey)) !== false) {
-                $thislist = preg_split('|,|', $thislist, -1, PREG_SPLIT_NO_EMPTY);
+                $thislist = preg_split('|,|', $thislist, -1, PREG_SPLIT_NO_EMPTY); 
             }
         } else if ($baselist !== false) {
             $thislist = array_keys(array_filter($baselist, function($el) {
