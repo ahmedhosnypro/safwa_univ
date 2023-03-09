@@ -1,0 +1,222 @@
+/* Tooltip container */
+.block_point_view.reactions-container .withtooltip {
+    pointer-events: none;
+}
+
+/* Tooltip text */
+.block_point_view.reactions-container .withtooltip .tooltiptext {
+    visibility: hidden;
+    display: table;
+    width: max-content;
+    background-color: #555;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    padding: 3px 10px;
+    border-radius: 20px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 2;
+    bottom: 30px;
+    left: 10px;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.block_point_view.reactions-container .withtooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.block_point_view.reactions-container .withtooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Source for tooltip : https://www.w3schools.com/css/css_tooltip.asp */
+
+
+/**********************/
+/* Reactions position */
+.block_point_view.reactions-container {
+    z-index: 1;
+    position: relative;
+}
+
+/* For Moodle 4.0+. */
+.activity-wrapper .block_point_view.reactions-container {
+    flex: 1 0;
+}
+
+.block_point_view.reactions-container ~ .mod-indent-outer,
+.block_point_view.reactions-container ~ div .mod-indent-outer {
+    max-width: 80%;
+}
+
+.block_point_view.reactions-container .reactions {
+    position: absolute;
+    right: -18px;
+    top: 0;
+    user-select: none;
+}
+
+/* For Moodle 4.0+. */
+.activity-wrapper .block_point_view.reactions-container .reactions {
+    right: -60px;
+    width: max-content;
+}
+
+.block_point_view.reactions-container .group {
+    position: absolute;
+    right: 50px;
+    top: 0;
+}
+
+/* For Moodle 4.0+. */
+.activity-wrapper .block_point_view.reactions-container .group {
+    right: 8px;
+}
+
+/**********************/
+
+.block_point_view.reactions-container .reaction,
+.block_point_view.reactions-container .group_img {
+    height: 20px;
+    min-width: 20px;
+    cursor: pointer;
+}
+
+.block_point_view.reactions-container .reaction img {
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    height: 0;
+    width: auto;
+    max-width: unset;
+}
+
+.block_point_view.reactions-container .reaction img.novote:not(:hover),
+.block_point_view .cell.novote {
+    -webkit-filter: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.block_point_view.reactions-container .reactionnb,
+.block_point_view.reactions-container .group_nb {
+    vertical-align: sub;
+}
+
+.block_point_view.reactions-container .group_nb {
+    width: 1.1em;
+    height: 1.1em;
+    display: inline-block;
+}
+
+.block_point_view.reactions-container .group_nb.voted {
+    border-radius: 50%;
+    color: white;
+    background: #66ad89;
+    line-height: 1em;
+}
+
+.block_point_view.reactions-container .nbselected {
+    font-weight: bold;
+    color: #5585b6;
+}
+
+/* Difficulty tracks */
+.block_point_view.track {
+    height: 1.6em;
+    width: 10px;
+    border-radius: 10%;
+    margin-right: 5px;
+}
+
+.path-course-view .activity .block_point_view.track {
+    padding: 0;
+    position: absolute;
+    margin-left: -15px;
+}
+
+/* For Moodle 4.0+. */
+.path-course-view .activity-instance .block_point_view.track {
+    height: 50px;
+}
+
+.block_point_view.selecttrack {
+    height: 2.4em;
+}
+
+/* Menu button in block content */
+.block_point_view .overview-link {
+    max-height: 40px;
+}
+
+.block_point_view .overview-link:hover {
+    -webkit-filter: invert(100%);
+    filter: invert(100%);
+}
+
+.block_point_view .overview_img,
+.block_point_view .pix-preview {
+    width: 30px;
+}
+
+.block_point_view .pixselectgroup {
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, auto);
+}
+
+/* Some adjustments for Adaptable theme */
+.theme_adaptable.path-course-view .activity .block_point_view.track {
+    height: 2em;
+}
+
+.theme_adaptable.path-course-view:not(.format-tiles) .activity .block_point_view.track,
+.theme_adaptable:not(.format-tiles) .block_point_view.reactions-container {
+    top: .5em;
+}
+
+.theme_adaptable:not(.format-tiles) .block_point_view.reactions-container {
+    right: 25px;
+}
+
+/* Some adjustments for More/Clean themes */
+.block_point_view .pixselectgroup + #fgroup_id_pixselectgroup fieldset > span {
+    display: block;
+    line-height: 35px;
+}
+
+.block_point_view .fcontainer > .pixselectgroup {
+    position: relative;
+    grid-template-columns: repeat(1, auto);
+    top: 5px;
+}
+
+.block_point_view .fcontainer > .pixselectgroup > * {
+    position: absolute;
+    left: 400px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.block_point_view .fcontainer > .pixselectgroup > :nth-child(2) {
+    top: 40px;
+}
+
+.block_point_view .fcontainer > .pixselectgroup > :nth-child(3) {
+    top: 80px;
+}
