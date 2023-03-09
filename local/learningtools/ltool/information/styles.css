@@ -1,0 +1,33 @@
+.modal .modal-body .ltool-information-course-info .image-block {
+    max-width: 150px;
+    width: 100%;
+    float: left;
+    vertical-align: top;
+}
+.modal .modal-body .ltool-information-course-info .image-block .carousel-inner {
+    height: 120px;
+}
+.modal .modal-body .ltool-information-course-info .image-block .carousel-inner > * {
+    height: 100%;
+}
+.modal .modal-body .ltool-information-course-info .image-block img {
+    height: 100%;
+    object-fit: cover;
+}
+.modal .modal-body .ltool-information-course-info .summary-block {
+    width: 65%;
+    margin-left: 30px;
+    display: inline-block;
+    vertical-align: top;
+}
+.modal .modal-body .ltool-information-course-info .summary-block p:empty {
+    display: none;
+}
+.modal .modal-body .ltool-information-course-info .image-block .carousel-indicators li {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.modal .modal-body .ltool-information-course-info .image-block .carousel-indicators {
+    margin-bottom: 0;
+}
