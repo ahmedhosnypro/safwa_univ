@@ -1,0 +1,45 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template block_deft/tasks
+
+    This template renders the tasks manager for deft response block
+
+    Example context (json):
+    {
+        "contextid": 4,
+        "id": "4",
+        "type": "text",
+        "configdata": {
+            "name": "Welcome",
+            "content": "hello"
+        }
+    }
+}}
+<div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3 p-1">
+    <div class="card deft-task-{{ type }}" data-id="{{ id }}" data-type="{{ type }}">
+        <div class="card-body">
+            <div data-region="taskinfo">{{> block_deft/taskinfo }}</div>
+            <div data-region="status" class="container"><div class="row">{{{ form }}}</div></div>
+        </div>
+    </div>
+</div>
+{{# js }}
+    require(['block_deft/form'], function(Form) {
+        new Form({{ contextid }}, '{{ type }}', {{ id }});
+    });
+{{/ js }}
