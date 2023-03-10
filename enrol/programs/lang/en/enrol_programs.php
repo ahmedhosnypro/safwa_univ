@@ -294,3 +294,4 @@ $string['updateallocations'] = 'Update allocations';
 $string['updateset'] = 'Update set';
 $string['updatescheduling'] = 'Update scheduling';
 $string['updatesource'] = 'Update {$a}';
+$string['exclude'] = 'exclude';
