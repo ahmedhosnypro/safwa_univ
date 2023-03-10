@@ -38,11 +38,12 @@ final class item_append extends \local_openlms\dialog_form {
         $params = ['programid' => $parentset->get_programid()];
         $exclude = $DB->get_fieldset_select('enrol_programs_items', 'courseid', $select, $params);
 
-        $mform->addElement('exclude', 'exclude', get_string('exclude'));
+        $mform->addElement('exclude', 'exclude', get_string('exclude'), 'true');
         $mform->setType('exclude', PARAM_BOOL);
+        $mform->setDefault('exclude', false);
 
         //dont exclude if exclude is not checked
-        if ($mform->getElementValue('exclude') == 0) {
+        if (!$mform->getElementValue('exclude')) {
             $exclude = [];
         }
 
