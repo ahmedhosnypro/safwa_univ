@@ -3059,7 +3059,7 @@ function require_login($courseorid = null, $autologinguest = true, $cm = null, $
             }
             //todo
             //redirect to my courses page /my/courses.php
-            redirect($CFG->wwwroot .'/my/courses.php', 'لا يمكنك عرض هذا المنهج', $messagetype = \core\output\notification::NOTIFY_WARNING);
+            redirect($CFG->wwwroot .'/my/courses.php', 'لا يمكنك عرض هذا المنهج', $messagetype = \core\output\notification::NOTIFY_ERROR);
 //            redirect($CFG->wwwroot .'/enrol/index.php?id='. $course->id);
         }
     }
