@@ -3057,7 +3057,10 @@ function require_login($courseorid = null, $autologinguest = true, $cm = null, $
             if ($setwantsurltome) {
                 $SESSION->wantsurl = qualified_me();
             }
-            redirect($CFG->wwwroot .'/enrol/index.php?id='. $course->id);
+            //todo
+            //redirect to my courses page /my/courses.php
+            redirect($CFG->wwwroot .'/my/courses.php', 'لا يمكنك عرض هذا المنهج');
+//            redirect($CFG->wwwroot .'/enrol/index.php?id='. $course->id);
         }
     }
 
