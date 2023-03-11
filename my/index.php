@@ -40,8 +40,8 @@ require_once($CFG->dirroot . '/my/lib.php');
 redirect_if_major_upgrade_required();
 
 // TODO Add sesskey check to edit
-$edit   = optional_param('edit', null, PARAM_BOOL);    // Turn editing on and off
-$reset  = optional_param('reset', null, PARAM_BOOL);
+$edit = optional_param('edit', null, PARAM_BOOL);    // Turn editing on and off
+$reset = optional_param('reset', null, PARAM_BOOL);
 
 require_login();
 
@@ -80,7 +80,9 @@ if (isguestuser()) {  // Force them to see system default, no editing allowed
 } else {        // We are trying to view or edit our own My Moodle page
     $userid = $USER->id;  // Owner of the page
     $context = context_user::instance($USER->id);
-    $PAGE->set_blocks_editing_capability('moodle/my:manageblocks');
+    if (is_siteadmin()) {
+        $PAGE->set_blocks_editing_capability('moodle/my:manageblocks');
+    }
     $pagetitle = $strmymoodle;
 }
 
@@ -109,7 +111,7 @@ if (!isguestuser()) {   // Skip default home page for guests
             $frontpagenode = $PAGE->settingsnav->add(get_string('frontpagesettings'), null, navigation_node::TYPE_SETTING, null);
             $frontpagenode->force_open();
             $frontpagenode->add(get_string('makethismyhome'), new moodle_url('/my/', array('setdefaulthome' => true)),
-                    navigation_node::TYPE_SETTING);
+                navigation_node::TYPE_SETTING);
         }
     }
 }
@@ -176,6 +178,7 @@ if (empty($CFG->forcedefaultmymoodle) && $PAGE->user_allowed_editing()) {
     $USER->editing = $edit = 0;
 }
 
+
 echo $OUTPUT->header();
 
 if (core_userfeedback::should_display_reminder()) {
@@ -187,6 +190,7 @@ echo $OUTPUT->addblockbutton('content');
 echo $OUTPUT->custom_block_region('content');
 
 echo $OUTPUT->footer();
+
 
 // Trigger dashboard has been viewed event.
 $eventparams = array('context' => $context);
