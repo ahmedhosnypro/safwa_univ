@@ -97,31 +97,6 @@
                 <div>{{{output.edwiser_check_faq}}}</div>
                 {{/output.edwiser_check_faq}}
             </div>
-            <div class="footer-section ">
-                {{#footerdata.poweredby}}
-                <div class="footer-poweredby">
-                    {{# str }}poweredby, theme_remui {{/ str }}
-                    {{#footerdata.isadmin}}
-                    <a href="https://edwiser.org/remui/" rel="nofollow" target="_blank">
-                        {{#str}}pluginname, theme_remui{{/str}}
-                    </a>
-                    {{/footerdata.isadmin}}
-                    {{^footerdata.isadmin}}
-                    {{#str}}pluginname, theme_remui{{/str}}
-                    {{/footerdata.isadmin}}
-
-                </div>
-                {{/footerdata.poweredby}}
-                {{^footerdata.poweredby}}
-                <div class="footer-poweredby">{{#str}}poweredbymoodle, core{{/str}}</div>
-                {{/footerdata.poweredby}}
-
-                {{#output.moodle_release}}
-                <div>
-                    {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
-                </div>
-                {{/output.moodle_release}}
-            </div>
         </div>
         <div class="footer-mainsection-wrapper">
             {{> theme_remui/footer_sections}}
