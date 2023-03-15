@@ -801,7 +801,7 @@ function copyrightShow() {
 function togglePoweredBy() {
 
     const coreHTML = `
-        ${M.util.get_string('poweredby', 'theme_remui')} <a href="https://moodle.com">Moodle</a>
+        ${M.util.get_string('poweredby', 'theme_remui')} <a href="https://safwauniversity.com">Moodle</a>
     `;
 
     const edwHTML = `
