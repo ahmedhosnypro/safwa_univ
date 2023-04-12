@@ -1,0 +1,47 @@
+$gray-200 : #e9ecef !default;
+$gray-300 : #d5ddea !default;
+
+@import 'spacing';
+@import 'frontpage';
+@import 'frontpage-rtl';
+@import 'text';
+@import 'slick';
+
+.courses-slider:not(.slick-slider) {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill,minmax(250px,1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(250px,1fr);
+    overflow-x: auto;
+}
+.round {
+    border-radius: 50%!important;
+}
+.w-full,
+.w-p100 {
+    width: 100%;
+}
+.h-p100 {
+    height: 100%;
+}
+.slick-arrow {
+    width: 50px;
+    height: 50px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    span {
+        margin: 0;
+        color: white;
+    }
+}
+
+.editmodal.remuihomepage {
+    input[type="color"] {
+        max-width: 40px;
+    }
+}
+.slick-slider .slick-slide {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
