@@ -51,7 +51,7 @@ $PAGE->set_pagelayout('report');
 //if (!$course = $DB->get_record('course', array('id' => $courseid))) {
 //    throw new \moodle_exception('invalidcourseid');
 //}
-require_login($course);
+//require_login($course);
 //$context = context_course::instance($course->id);
 
 // The report object is recreated each time, save search information to SESSION object for future use.
