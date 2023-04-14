@@ -179,7 +179,6 @@ if ($data = data_submitted() and confirm_sesskey()) {
     }
 
     // Update weights (extra credits) on categories and items.
-    //todo uncommecnt
     foreach ($data as $key => $value) {
         if (preg_match('/^weight_([0-9]+)$/', $key, $matches)) {
             $aid   = $matches[1];
