@@ -28,9 +28,9 @@ require_once($CFG->dirroot.'/user/renderer.php');
 require_once($CFG->dirroot.'/grade/lib.php');
 require_once($CFG->dirroot.'/grade/report/grader/lib.php');
 
-//$courseid      = required_param('id', PARAM_INT);        // course id
-//$page          = optional_param('page', 0, PARAM_INT);   // active page
-//$edit          = optional_param('edit', -1, PARAM_BOOL); // sticky editting mode
+$courseid      = required_param('id', PARAM_INT);        // course id
+$page          = optional_param('page', 0, PARAM_INT);   // active page
+$edit          = optional_param('edit', -1, PARAM_BOOL); // sticky editting mode
 //
 //$sortitemid    = optional_param('sortitemid', 0, PARAM_ALPHANUMEXT);
 //$action        = optional_param('action', 0, PARAM_ALPHAEXT);
@@ -48,11 +48,11 @@ $PAGE->set_pagelayout('report');
 //$PAGE->requires->js_call_amd('gradereport_grader/stickycolspan', 'init');
 
 // basic access checks
-//if (!$course = $DB->get_record('course', array('id' => $courseid))) {
-//    throw new \moodle_exception('invalidcourseid');
-//}
-//require_login($course);
-//$context = context_course::instance($course->id);
+if (!$course = $DB->get_record('course', array('id' => $courseid))) {
+    throw new \moodle_exception('invalidcourseid');
+}
+require_login($course);
+$context = context_course::instance($course->id);
 
 // The report object is recreated each time, save search information to SESSION object for future use.
 //if (isset($graderreportsifirst)) {
