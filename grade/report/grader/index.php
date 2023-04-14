@@ -23,10 +23,10 @@
  */
 
 require_once('../../../config.php');
-//require_once($CFG->libdir.'/gradelib.php');
-//require_once($CFG->dirroot.'/user/renderer.php');
-//require_once($CFG->dirroot.'/grade/lib.php');
-//require_once($CFG->dirroot.'/grade/report/grader/lib.php');
+require_once($CFG->libdir.'/gradelib.php');
+require_once($CFG->dirroot.'/user/renderer.php');
+require_once($CFG->dirroot.'/grade/lib.php');
+require_once($CFG->dirroot.'/grade/report/grader/lib.php');
 
 //$courseid      = required_param('id', PARAM_INT);        // course id
 //$page          = optional_param('page', 0, PARAM_INT);   // active page
