@@ -339,6 +339,8 @@ class theme_remui_coursehandler {
     public function get_course_stats($course) {
         global $DB;
         $stats = array();
+        //todo reupdte
+        return $stats;
         // This capability is allowed to only students - 'moodle/course:isincompletionreports'.
         $enrolledusers = get_enrolled_users(\context_course::instance($course->id), 'moodle/course:isincompletionreports');
         $coursepercentage = new \core_completion\progress();
