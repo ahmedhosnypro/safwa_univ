@@ -52,11 +52,11 @@ class utility {
         $mainarr['children'] = [];
         $mainarr['classes'] = "catselector-menu";
         $mainarr['sort'] = "catselector-menu";
-//        $obj['text'] = "كل الفرق";
-//        $obj['url'] = new moodle_url('/course/index.php?', array(
-//            'categoryid' => 'all'
-//        ));
-//        $obj['title'] = 'all';
+        $obj['text'] = "كل الأقسام";
+        $obj['url'] = new moodle_url('/course/index.php?', array(
+            'categoryid' => 'all'
+        ));
+        $obj['title'] = 'all';
         $mainarr['children'][] = $obj;
         foreach ($categories as $categoryid => $categoryname) {
             $categorytitle = "";
