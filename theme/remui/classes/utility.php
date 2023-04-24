@@ -46,13 +46,13 @@ class utility {
         $mainarr = [];
         $coursecategorytext = get_config('theme_remui', 'coursecategoriestext');
 //        $mainarr['text'] = $coursecategorytext == "" ? get_string('coursecategories', 'theme_remui') : $coursecategorytext;
-        $mainarr['text'] = "كل الفرق";
+        $mainarr['text'] = "كلية العلوم الشرعية والعربية";
         $mainarr['key'] = 'coursecat';
         $mainarr['url'] = "#";
         $mainarr['children'] = [];
         $mainarr['classes'] = "catselector-menu";
         $mainarr['sort'] = "catselector-menu";
-        $obj['text'] = 'All categories';
+        $obj['text'] = "كل الفرق";
         $obj['url'] = new moodle_url('/course/index.php?', array(
             'categoryid' => 'all'
         ));
