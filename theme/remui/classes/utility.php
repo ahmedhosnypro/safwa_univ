@@ -62,7 +62,7 @@ class utility {
             $tempcategorydata = explode('/', $categoryname);
 
             foreach ($tempcategorydata as $key => $data) {
-                $categorytitle .= strlen($data) > 27 ? substr(trim($data, " "), 0, 27).".../" : trim($data, " ")."/";
+                $categorytitle .= strlen($data) > 200 ? substr(trim($data, " "), 0, 200).".../" : trim($data, " ")."/";
             }
 
             $mainarr['haschildren'] = true;
