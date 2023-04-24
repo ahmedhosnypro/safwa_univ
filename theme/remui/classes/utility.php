@@ -45,7 +45,8 @@ class utility {
         $categories = \core_course_category::make_categories_list();
         $mainarr = [];
         $coursecategorytext = get_config('theme_remui', 'coursecategoriestext');
-        $mainarr['text'] = $coursecategorytext == "" ? get_string('coursecategories', 'theme_remui') : $coursecategorytext;
+//        $mainarr['text'] = $coursecategorytext == "" ? get_string('coursecategories', 'theme_remui') : $coursecategorytext;
+        $mainarr['text'] = "كل الفرق";
         $mainarr['key'] = 'coursecat';
         $mainarr['url'] = "#";
         $mainarr['children'] = [];
